@@ -1,5 +1,12 @@
+<jsp:directive.page contentType="text/html; charset=Utf-8"/>
+
 <html>
+<head><title>Index JSP</title></head>
+
 <body>
-<h2>Hello World!</h2>
+
+<a href="controller">Main Controller</a>
+
 </body>
 </html>
+
