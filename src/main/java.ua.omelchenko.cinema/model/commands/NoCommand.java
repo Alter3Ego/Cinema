@@ -1,7 +1,6 @@
 package model.commands;
 
 import model.manager.ConfigurationManager;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

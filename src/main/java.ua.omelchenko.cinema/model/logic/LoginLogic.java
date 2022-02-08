@@ -1,9 +1,10 @@
 package model.logic;
 
-import controller.Controller;
-import model.manager.ConfigurationManager;
-import org.apache.log4j.Logger;
 
+import model.database.DataBaseUtility;
+import model.manager.ConfigurationManager;
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
 import java.sql.*;
 
 public class LoginLogic {
@@ -15,13 +16,12 @@ public class LoginLogic {
 //create simple database connection
             String driver = ConfigurationManager.getInstance().getProperty(ConfigurationManager.DATABASE_DRIVER_NAME);
             Class.forName(driver);
-            Connection cn = null;
+            Connection connection = null;
 //check if the user exists
             try {
-                String url = ConfigurationManager.getInstance()
-                        .getProperty(ConfigurationManager.DATABASE_URL);
-                cn = DriverManager.getConnection(url);
-                try (PreparedStatement st = cn.prepareStatement(
+                BasicDataSource dataSource = DataBaseUtility.getDataSource();
+                connection = dataSource.getConnection();
+                try (PreparedStatement st = connection.prepareStatement(
                         "SELECT * FROM users WHERE login = ? AND password = ?")) {
                     st.setString(1, login);
                     st.setString(2, password);
@@ -30,8 +30,8 @@ public class LoginLogic {
                     }
                 }
             } finally {
-                if (cn != null)
-                    cn.close();
+                if (connection != null)
+                    connection.close();
             }
         } catch (SQLException | ClassNotFoundException e) {
             LOGGER.error(e.getMessage(), e);
