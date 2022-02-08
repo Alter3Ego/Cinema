@@ -27,10 +27,12 @@ public class Controller extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("typeRequest","GET");
         processRequest(req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("typeRequest","POST");
         processRequest(req, resp);
     }
 
@@ -42,6 +44,7 @@ public class Controller extends HttpServlet {
 
 //passing parameters to a specific command handler class
             page = command.execute(req, resp);
+            System.out.println("this is page" + page);
 
 // method returns response page
         } catch (ServletException e) {
@@ -61,7 +64,17 @@ public class Controller extends HttpServlet {
             page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE_PATH);
         }
 //call the request response page
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-        dispatcher.forward(req, resp);
+        if (req.getAttribute("typeRequest")  == "GET") {
+            LOGGER.debug("This is disp");
+            LOGGER.debug("This is atribute " + req.getAttribute("user") );
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+            dispatcher.forward(req, resp);
+        } else {
+            LOGGER.debug("This is redirect");
+            LOGGER.debug("This is atribute " + req.getAttribute("user"));
+
+            resp.sendRedirect(page);
+        }
+
     }
 }

@@ -20,10 +20,11 @@ public class LoginCommand implements Command {
         String login = req.getParameter(PARAM_NAME_LOGIN);
         System.out.println(login);
         String pass = req.getParameter(PARAM_NAME_PASSWORD);
+        req.setAttribute("type","Com");
         System.out.println(pass);
 //check login and password
         if (LoginLogic.checkLogin(login, pass)) {
-            req.setAttribute("user", login);
+            req.getSession().setAttribute("user", login);
 //defining the path to main.jsp
             page = ConfigurationManager.getInstance()
                     .getProperty(ConfigurationManager.MAIN_PAGE_PATH);
