@@ -23,6 +23,12 @@ public class DataBaseUtility {
             ds.setMinIdle(MIN_IDLE);
             ds.setMaxIdle(MAX_IDLE);
             ds.setMaxOpenPreparedStatements(MAX_OPEN_PREPARED_STATEMENTS);
+            String driver = ConfigurationManager.getInstance().getProperty(ConfigurationManager.DATABASE_DRIVER_NAME);
+            try {
+                Class.forName(driver);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             dataSource = ds;
         }
         return dataSource;

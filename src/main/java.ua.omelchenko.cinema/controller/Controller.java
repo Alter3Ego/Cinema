@@ -2,8 +2,6 @@ package controller;
 
 import model.RequestHelper;
 import model.commands.Command;
-import model.manager.ConfigurationManager;
-import model.manager.MessageManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -27,54 +25,34 @@ public class Controller extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("typeRequest","GET");
+        req.setAttribute("typeRequest", "GET");
         processRequest(req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("typeRequest","POST");
+        req.setAttribute("typeRequest", "POST");
         processRequest(req, resp);
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = null;
-        try {
-//defining a command that came from a JSP
-            Command command = requestHelper.getCommand(req);
+        LOGGER.debug("This is controller ");
+        req.getSession().setAttribute("temp", new TemporaryAttributes());
+        //req.getSession().removeAttribute("dust.errorLogin");
+        Command command = requestHelper.getCommand(req);
 
 //passing parameters to a specific command handler class
-            page = command.execute(req, resp);
-            System.out.println("this is page" + page);
+        page = command.execute(req, resp);
 
 // method returns response page
-        } catch (ServletException e) {
-            LOGGER.error(e.getMessage(), e);
-//error message generation
-            req.setAttribute("errorMessage",
-                    MessageManager.getInstance().getProperty(
-                            MessageManager.SERVLET_EXCEPTION_ERROR_MESSAGE));
-//call JSP page with error message
-            page = ConfigurationManager.getInstance()
-                    .getProperty(ConfigurationManager.ERROR_PAGE_PATH);
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            req.setAttribute("errorMessage",
-                    MessageManager.getInstance()
-                            .getProperty(MessageManager.IO_EXCEPTION_ERROR_MESSAGE));
-            page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE_PATH);
-        }
-//call the request response page
-        if (req.getAttribute("typeRequest")  == "GET") {
-            LOGGER.debug("This is disp");
-            LOGGER.debug("This is atribute " + req.getAttribute("user") );
+        //call the request response page
+        if (req.getAttribute("typeRequest") == "GET") {
+            LOGGER.debug("This is attribute " + req.getAttribute("user.role"));
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
             dispatcher.forward(req, resp);
         } else {
-            LOGGER.debug("This is redirect");
-            LOGGER.debug("This is atribute " + req.getAttribute("user"));
-
+            LOGGER.debug("This is attribute " + req.getAttribute("user.role"));
             resp.sendRedirect(page);
         }
-
     }
 }

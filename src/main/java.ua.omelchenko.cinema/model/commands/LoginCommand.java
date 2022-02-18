@@ -1,39 +1,45 @@
 package model.commands;
 
-import model.logic.LoginLogic;
+import Entity.User;
+import controller.TemporaryAttributes;
+import model.dao.DaoFactory;
+import model.logic.PasswordHash;
 import model.manager.ConfigurationManager;
-import model.manager.MessageManager;
+import model.service.UserService;
+import model.service.impl.UserServiceImpl;
+import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class LoginCommand implements Command {
-
-    private static final String PARAM_NAME_LOGIN = "login";
+    private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
+    private static final String PARAM_NAME_EMAIL = "email";
     private static final String PARAM_NAME_PASSWORD = "password";
 
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String page = null;
-//get login and password from request
-        String login = req.getParameter(PARAM_NAME_LOGIN);
-        System.out.println(login);
+
+//get email and password from request
+        String email = req.getParameter(PARAM_NAME_EMAIL);
         String pass = req.getParameter(PARAM_NAME_PASSWORD);
-        req.setAttribute("type","Com");
-        System.out.println(pass);
-//check login and password
-        if (LoginLogic.checkLogin(login, pass)) {
-            req.getSession().setAttribute("user", login);
-//defining the path to main.jsp
+
+        String hashPass = PasswordHash.encryption(pass);
+        UserService userService = new UserServiceImpl(DaoFactory.getInstance());
+        User user = userService.getUserByEmailAndPass(email, hashPass);
+
+        if (user != null) {
+            req.getSession().setAttribute("user", user);
+//defining the path to index.jsp
             page = ConfigurationManager.getInstance()
                     .getProperty(ConfigurationManager.MAIN_PAGE_PATH);
         } else {
-            req.setAttribute("errorMessage",
-                    MessageManager.getInstance()
-                            .getProperty(MessageManager.LOGIN_ERROR_MESSAGE));
+            TemporaryAttributes tA = (TemporaryAttributes) req.getSession().getAttribute("temp");
+            tA.setEmailError(true);
+            req.getSession().setAttribute("temp", tA);
+            LOGGER.debug("This is emailError " + req.getAttribute("temp.emailError"));
             page = ConfigurationManager.getInstance()
-                    .getProperty(ConfigurationManager.ERROR_PAGE_PATH);
+                    .getProperty(ConfigurationManager.LOGIN_PAGE_PATH);
         }
         return page;
     }
