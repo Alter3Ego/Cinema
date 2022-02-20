@@ -7,7 +7,6 @@ import model.logic.PasswordHash;
 import model.manager.ConfigurationManager;
 import model.service.UserService;
 import model.service.impl.UserServiceImpl;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

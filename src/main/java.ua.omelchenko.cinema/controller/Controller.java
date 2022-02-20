@@ -26,6 +26,7 @@ public class Controller extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("typeRequest", "GET");
+        LOGGER.debug("This is GET ");
         processRequest(req, resp);
     }
 
@@ -36,9 +37,8 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = null;
-        LOGGER.debug("This is controller ");
+        LOGGER.debug("This is controller and reqLo " + req.getSession().getAttribute("lang"));
         req.getSession().setAttribute("temp", new TemporaryAttributes());
-        //req.getSession().removeAttribute("dust.errorLogin");
         Command command = requestHelper.getCommand(req);
 
 //passing parameters to a specific command handler class
@@ -46,13 +46,14 @@ public class Controller extends HttpServlet {
 
 // method returns response page
         //call the request response page
-        if (req.getAttribute("typeRequest") == "GET") {
-            LOGGER.debug("This is attribute " + req.getAttribute("user.role"));
+        if (req.getAttribute("typeRequest") == "POST") {
+            LOGGER.debug("This is POST ");
+            resp.sendRedirect(page);
+
+        } else {
+
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
             dispatcher.forward(req, resp);
-        } else {
-            LOGGER.debug("This is attribute " + req.getAttribute("user.role"));
-            resp.sendRedirect(page);
         }
     }
 }

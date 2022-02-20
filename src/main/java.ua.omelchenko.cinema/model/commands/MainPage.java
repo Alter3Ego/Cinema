@@ -6,25 +6,25 @@ import model.dao.DaoFactory;
 import model.manager.ConfigurationManager;
 import model.service.SessionService;
 import model.service.impl.SessionServiceImpl;
-import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class MainPage implements Command {
-    private static final Logger LOGGER = Logger.getLogger(MainPage.class);
     public static final int NUMBERS_OF_OBJECTS = 4;
     public static final int ONE_MORE_OBJECT = NUMBERS_OF_OBJECTS + 1;
 
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        Integer number = null;
+
+        Integer number = (Integer) request.getSession().getAttribute("currentMainPage");
         if (request.getParameter("mainPage") != null) {
             number = Integer.valueOf(request.getParameter("mainPage"));
         }
-        LOGGER.debug("This is NoCommand " + number);
+
         pagination(request, number);
+        request.getSession().setAttribute("currentMainPage", number);
+
         return ConfigurationManager.getInstance()
                 .getProperty(ConfigurationManager.MAIN_PAGE_PATH);
     }
@@ -51,10 +51,8 @@ public class MainPage implements Command {
         tA.setMainPreviousPage(end - NUMBERS_OF_OBJECTS * 2);
         if (sessionList.size() >= ONE_MORE_OBJECT) {
             tA.setMainNextPage(end);
-            LOGGER.debug("This is NoCommand GO " + tA.getMainNextPage());
         }
 
-        LOGGER.debug("This is NoCommand Back " + tA.getMainPreviousPage());
         request.getSession().setAttribute("temp", tA);
 
         Session session1 = extract(sessionList);

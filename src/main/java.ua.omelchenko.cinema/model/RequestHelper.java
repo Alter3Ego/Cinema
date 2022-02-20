@@ -18,7 +18,6 @@ public class RequestHelper {
         commands.put("login", new LoginCommand());
         commands.put("logOut", new LogoutCommand());
         commands.put("signUp", new SignUpCommand());
-        commands.put("move", new MoveCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

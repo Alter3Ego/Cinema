@@ -8,6 +8,7 @@ import java.io.IOException;
 
 @WebFilter(filterName = "SessionLocaleFilter", urlPatterns = {"/*"})
 public class SessionLocaleFilter implements Filter {
+    private static final Logger LOGGER = Logger.getLogger(SessionLocaleFilter.class);
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
@@ -15,6 +16,7 @@ public class SessionLocaleFilter implements Filter {
 
         if (req.getParameter("sessionLocale") != null) {
             req.getSession().setAttribute("lang", req.getParameter("sessionLocale"));
+            LOGGER.debug("change Locale " + req.getSession().getAttribute("lang"));
         }
         chain.doFilter(request, response);
     }

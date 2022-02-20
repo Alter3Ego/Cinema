@@ -1,13 +1,14 @@
 package controller.filters;
 
 import org.apache.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/*")
+@WebFilter(filterName = "SecurityFilter", urlPatterns = {"/*"})
 public class SecurityFilter implements Filter {
     private static final Logger LOGGER = Logger.getLogger(SecurityFilter.class);
 
@@ -21,20 +22,21 @@ public class SecurityFilter implements Filter {
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpSession session = req.getSession();
         String currentUri = req.getRequestURI();
-        LOGGER.debug("This is SecurityFilter " + currentUri);
+        LOGGER.debug("InputFilterURI" + currentUri);
         String path = null;
-        if (currentUri.equals("/index.jsp") || currentUri.equals("/")) {
-            path = "/controller";
+        if (currentUri.contains("/index.jsp")) {
+            path = currentUri.replace("index.jsp", "controller");
+
         }
-        if (currentUri.equals("/login.jpg")||currentUri.equals("/signUp.jpg")) {
-            path = "/controller?command=move&URI=" + currentUri;
+        if (currentUri.equals("/")) {
+            path = currentUri + "controller";
         }
-        if (path != null) {
+        if(path != null) {
             RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher(path);
             requestDispatcher.forward(servletRequest, servletResponse);
-        } else {
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
+        } else
+        filterChain.doFilter(servletRequest, servletResponse);
+
     }
 
     @Override

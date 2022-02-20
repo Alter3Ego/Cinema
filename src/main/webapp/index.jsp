@@ -120,7 +120,12 @@
         </c:if>
     </div>
 </div>
-
+<div class="text-center">
+    <form name="paginationForm" method="GET" action="controller">
+        <button type="submit"  name="mainPage" value="${temp.mainPreviousPage}" class="btn btn-primary align-center">
+            <fmt:message key="login.submit"/></button>
+    </form>
+</div>
 <div class="text-center">
     <c:if test="${temp.mainNextPage == null || temp.mainNextPage > 5}">
         <a href="controller?mainPage=${temp.mainPreviousPage}" class="btn btn-primary my-2">&#8592;<fmt:message
@@ -131,6 +136,7 @@
                 key="index.navigation.next"/>&#8594;</a>
     </c:if>
 </div>
+
 </body>
 </html>
 
