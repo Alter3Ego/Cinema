@@ -14,7 +14,6 @@ public class MainPage implements Command {
     public static final int NUMBERS_OF_OBJECTS = 4;
     public static final int ONE_MORE_OBJECT = NUMBERS_OF_OBJECTS + 1;
 
-
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         Integer number = (Integer) request.getSession().getAttribute("currentMainPage");
@@ -55,14 +54,14 @@ public class MainPage implements Command {
 
         request.getSession().setAttribute("temp", tA);
 
-        Session session1 = extract(sessionList);
-        Session session2 = extract(sessionList);
-        Session session3 = extract(sessionList);
-        Session session4 = extract(sessionList);
+        Session movieCell1 = extract(sessionList);
+        Session movieCell2 = extract(sessionList);
+        Session movieCell3 = extract(sessionList);
+        Session movieCell4 = extract(sessionList);
 
-        request.getSession().setAttribute("mainSession1", session1);
-        request.getSession().setAttribute("mainSession2", session2);
-        request.getSession().setAttribute("mainSession3", session3);
-        request.getSession().setAttribute("mainSession4", session4);
+        request.getSession().setAttribute("mainCell1", movieCell1);
+        request.getSession().setAttribute("mainCell2", movieCell2);
+        request.getSession().setAttribute("mainCell3", movieCell3);
+        request.getSession().setAttribute("mainCell4", movieCell4);
     }
 }

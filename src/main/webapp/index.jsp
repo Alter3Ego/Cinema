@@ -17,25 +17,32 @@
 <a href="#" class="btn btn-primary my-2"><fmt:message key="index.sort.datetime"/></a>
 <a href="#" class="btn btn-primary my-2 "><fmt:message key="index.sort.name"/></a>
 <a href="#" class="btn btn-primary my-2"><fmt:message key="index.sort.places"/></a>
+<c:if test="${mainCell1 == null}">
+    <h1 class="text-center">
+
+        <fmt:message key="index.sort.sorry"/>
+
+    </h1>
+</c:if>
 <div class="row mb-2">
-    <c:if test="${mainSession1 != null}">
+    <c:if test="${mainCell1 != null}">
         <div class="col-md-6">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col-auto d-none d-lg-block">
                     <img class="bd-placeholder-img" width="200" height="250"
-                         src="images/img${mainSession1.film.filmId}.jpg">
+                         src="images/img${mainCell1.film.filmId}.jpg">
                 </div>
                 <div class="col p-4 d-flex flex-column position-static">
-                    <a href="controller?command=sessionPage&sessionId=${mainSession1.sessionId}" class="stretched-link">
+                    <a href="controller?command=sessionPage&sessionId=${mainCell1.sessionId}" class="stretched-link">
                         <h3 class="mb-0 text-center"><fmt:formatDate type="both"
                                                                      dateStyle="short" timeStyle="short"
-                                                                     value="${mainSession1.dateTime}"/></h3></a>
-                    <h4>${mainSession1.film.title} ${mainSession1.film.releaseYear}</h4>
+                                                                     value="${mainCell1.dateTime}"/></h3></a>
+                    <h4>${mainCell1.film.title} ${mainCell1.film.releaseYear}</h4>
                     <p class="card-text mb-auto"><h6><fmt:message
-                        key="index.session.director"/> ${mainSession1.film.producer}</h6>
+                        key="index.session.director"/> ${mainCell1.film.producer}</h6>
                     <p class="card-text mb-auto"><h6><fmt:message
-                        key="index.session.genre"/> ${mainSession1.film.genre}</h6>
-                    <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainSession1.film.price}
+                        key="index.session.genre"/> ${mainCell1.film.genre}</h6>
+                    <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainCell1.film.price}
                     <fmt:message key="index.session.UAH"/></h6>
 
                 </div>
@@ -43,24 +50,24 @@
             </div>
         </div>
     </c:if>
-    <c:if test="${mainSession2 != null}">
+    <c:if test="${mainCell2 != null}">
     <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col-auto d-none d-lg-block">
                 <img class="bd-placeholder-img" width="200" height="250"
-                     src="images/img${mainSession2.film.filmId}.jpg">
+                     src="images/img${mainCell2.film.filmId}.jpg">
             </div>
             <div class="col p-4 d-flex flex-column position-static">
-                <a href="controller?command=sessionPage&sessionId=${mainSession2.sessionId}" class="stretched-link">
+                <a href="controller?command=sessionPage&sessionId=${mainCell2.sessionId}" class="stretched-link">
                     <h3 class="mb-0 text-center"><fmt:formatDate type="both"
                                                                  dateStyle="short" timeStyle="short"
-                                                                 value="${mainSession2.dateTime}"/></h3></a>
-                <h4>${mainSession2.film.title} ${mainSession2.film.releaseYear}</h4>
+                                                                 value="${mainCell2.dateTime}"/></h3></a>
+                <h4>${mainCell2.film.title} ${mainCell2.film.releaseYear}</h4>
                 <p class="card-text mb-auto"><h6><fmt:message
-                    key="index.session.director"/> ${mainSession2.film.producer}</h6>
+                    key="index.session.director"/> ${mainCell2.film.producer}</h6>
                 <p class="card-text mb-auto"><h6><fmt:message
-                    key="index.session.genre"/> ${mainSession2.film.genre}</h6>
-                <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainSession2.film.price}
+                    key="index.session.genre"/> ${mainCell2.film.genre}</h6>
+                <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainCell2.film.price}
                 <fmt:message key="index.session.UAH"/></h6>
 
             </div>
@@ -69,24 +76,24 @@
         </c:if>
     </div>
 
-    <c:if test="${mainSession3 != null}">
+    <c:if test="${mainCell3 != null}">
         <div class="col-md-6">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col-auto d-none d-lg-block">
                     <img class="bd-placeholder-img" width="200" height="250"
-                         src="images/img${mainSession3.film.filmId}.jpg">
+                         src="images/img${mainCell3.film.filmId}.jpg">
                 </div>
                 <div class="col p-4 d-flex flex-column position-static">
-                    <a href="controller?command=sessionPage&sessionId=${mainSession3.sessionId}" class="stretched-link">
+                    <a href="controller?command=sessionPage&sessionId=${mainCell3.sessionId}" class="stretched-link">
                         <h3 class="mb-0 text-center"><fmt:formatDate type="both"
                                                                      dateStyle="short" timeStyle="short"
-                                                                     value="${mainSession3.dateTime}"/></h3></a>
-                    <h4>${mainSession3.film.title} ${mainSession3.film.releaseYear}</h4>
+                                                                     value="${mainCell3.dateTime}"/></h3></a>
+                    <h4>${mainCell3.film.title} ${mainCell3.film.releaseYear}</h4>
                     <p class="card-text mb-auto"><h6><fmt:message
-                        key="index.session.director"/> ${mainSession3.film.producer}</h6>
+                        key="index.session.director"/> ${mainCell3.film.producer}</h6>
                     <p class="card-text mb-auto"><h6><fmt:message
-                        key="index.session.genre"/> ${mainSession3.film.genre}</h6>
-                    <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainSession3.film.price}
+                        key="index.session.genre"/> ${mainCell3.film.genre}</h6>
+                    <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainCell3.film.price}
                     <fmt:message key="index.session.UAH"/></h6>
 
                 </div>
@@ -94,43 +101,38 @@
             </div>
         </div>
     </c:if>
-    <c:if test="${mainSession4 != null}">
+    <c:if test="${mainCell4 != null}">
     <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col-auto d-none d-lg-block">
                 <img class="bd-placeholder-img" width="200" height="250"
-                     src="images/img${mainSession4.film.filmId}.jpg">
+                     src="images/img${mainCell4.film.filmId}.jpg">
             </div>
             <div class="col p-4 d-flex flex-column position-static">
-                <a href="controller?command=sessionPage&sessionId=${mainSession4.sessionId}" class="stretched-link">
+                <a href="controller?command=sessionPage&sessionId=${mainCell4.sessionId}" class="stretched-link">
                     <h3 class="mb-0 text-center"><fmt:formatDate type="both"
                                                                  dateStyle="short" timeStyle="short"
-                                                                 value="${mainSession4.dateTime}"/></h3></a>
-                <h4>${mainSession4.film.title} ${mainSession4.film.releaseYear}</h4>
+                                                                 value="${mainCell4.dateTime}"/></h3></a>
+                <h4>${mainCell4.film.title} ${mainCell4.film.releaseYear}</h4>
                 <p class="card-text mb-auto"><h6><fmt:message
-                    key="index.session.director"/> ${mainSession4.film.producer}</h6>
+                    key="index.session.director"/> ${mainCell4.film.producer}</h6>
                 <p class="card-text mb-auto"><h6><fmt:message
-                    key="index.session.genre"/> ${mainSession4.film.genre}</h6>
-                <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainSession4.film.price}
+                    key="index.session.genre"/> ${mainCell4.film.genre}</h6>
+                <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainCell4.film.price}
                 <fmt:message key="index.session.UAH"/></h6>
 
             </div>
-
         </div>
         </c:if>
     </div>
 </div>
 <div class="text-center">
-    <form name="paginationForm" method="GET" action="controller">
-        <button type="submit"  name="mainPage" value="${temp.mainPreviousPage}" class="btn btn-primary align-center">
-            <fmt:message key="login.submit"/></button>
-    </form>
-</div>
-<div class="text-center">
-    <c:if test="${temp.mainNextPage == null || temp.mainNextPage > 5}">
+<c:if test="${mainCell1 != null}">
+    <c:if test="${temp.mainNextPage == null || temp.mainNextPage > 5 }">
         <a href="controller?mainPage=${temp.mainPreviousPage}" class="btn btn-primary my-2">&#8592;<fmt:message
                 key="index.navigation.back"/></a>
     </c:if>
+</c:if>
     <c:if test="${temp.mainNextPage != null}">
         <a href="controller?mainPage=${temp.mainNextPage}" class="btn btn-primary my-2"><fmt:message
                 key="index.navigation.next"/>&#8594;</a>
