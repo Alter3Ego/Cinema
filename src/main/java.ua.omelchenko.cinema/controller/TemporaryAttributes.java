@@ -9,6 +9,8 @@ public class TemporaryAttributes {
     //SignUp errors
     private boolean signUpDataError;
     private boolean signUpEmailError;
+    //User errors
+    private boolean errorUpdateSum;
 
     public TemporaryAttributes() {
     }
@@ -51,5 +53,13 @@ public class TemporaryAttributes {
 
     public void setSignUpEmailError(boolean signUpEmailError) {
         this.signUpEmailError = signUpEmailError;
+    }
+
+    public boolean getErrorUpdateSum() {
+        return errorUpdateSum;
+    }
+
+    public void setErrorUpdateSum(boolean errorUpdateSum) {
+        this.errorUpdateSum = errorUpdateSum;
     }
 }

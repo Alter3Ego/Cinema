@@ -5,6 +5,8 @@ import model.dao.DaoFactory;
 import model.dao.UserDao;
 import model.service.UserService;
 
+import java.math.BigDecimal;
+
 public class UserServiceImpl implements UserService {
     private final DaoFactory daoFactory;
 
@@ -29,6 +31,13 @@ public class UserServiceImpl implements UserService {
     public boolean addUser(User user) {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.create(user);
+        }
+    }
+
+    @Override
+    public User updateBalance(User user, BigDecimal sum) {
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.updateBalance(user,sum);
         }
     }
 }

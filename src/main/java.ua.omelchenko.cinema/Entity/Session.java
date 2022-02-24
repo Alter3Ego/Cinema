@@ -6,6 +6,7 @@ public class Session {
     private int sessionId;
     private Date dateTime;
     private Film film;
+    private Integer numberOfTickets;
 
     public int getSessionId() {
         return sessionId;
@@ -29,5 +30,13 @@ public class Session {
 
     public void setFilm(Film film) {
         this.film = film;
+    }
+
+    public Integer getNumberOfTickets() {
+        return numberOfTickets;
+    }
+
+    public void setNumberOfTickets(Integer numberOfTickets) {
+        this.numberOfTickets = numberOfTickets;
     }
 }

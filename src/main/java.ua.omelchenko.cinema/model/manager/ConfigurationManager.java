@@ -22,6 +22,9 @@ public class ConfigurationManager {
     public static final String LOGIN_PAGE_PATH = "LOGIN_PAGE_PATH";
     public static final String SIGN_UP_PAGE_PATH = "SIGN_UP_PAGE_PATH";
     public static final String MAIN_PAGE_PATH = "MAIN_PAGE_PATH";
+    public static final String USER_PAGE_PATH = "USER_PAGE_PATH";
+
+    public static final String HALL_CAPACITY = "HALL_CAPACITY";
 
     public static ConfigurationManager getInstance() {
         if (instance == null) {
@@ -35,5 +38,9 @@ public class ConfigurationManager {
     public String getProperty(String key) {
         return (String) resourceBundle.getObject(key);
     }
+    public Integer getNumberProperty(String key) {
+        return  Integer.valueOf( (String) resourceBundle.getObject(key));
+    }
+
 
 }

@@ -14,9 +14,9 @@ public class SessionServiceImpl implements SessionService {
         this.daoFactory = daoFactory;
     }
     @Override
-    public List<Session> getServicesOrderByLimits(String orderBy, int start, int end) {
+    public List<Session> getServicesOrderByLimits(String orderBy, int start, int end, int ticketLimit) {
         try (SessionDao dao = daoFactory.createSessionDao()) {
-            return dao.findAllPage(orderBy, start, end);
+            return dao.findAllPage(orderBy, start, end, ticketLimit);
         }
     }
 }

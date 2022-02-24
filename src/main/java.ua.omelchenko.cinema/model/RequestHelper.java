@@ -1,6 +1,7 @@
 package model;
 
 import model.commands.*;
+import model.commands.user.UpdateBalance;
 import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class RequestHelper {
         commands.put("login", new LoginCommand());
         commands.put("logOut", new LogoutCommand());
         commands.put("signUp", new SignUpCommand());
+        commands.put("updateBalance", new UpdateBalance());
+
     }
 
     public Command getCommand(HttpServletRequest request) {

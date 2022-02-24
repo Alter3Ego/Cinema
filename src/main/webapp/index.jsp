@@ -13,10 +13,29 @@
 <jsp:include page="header.jsp"/>
 
 <body style="background-color: #7cb5bd">
+<div>
+<a href="controller?mainPage=1&sort=datetime" class="btn btn-primary my-2"><fmt:message key="index.sort.datetime"/></a>
+<a href="controller?mainPage=1&sort=name" class="btn btn-primary my-2 "><fmt:message key="index.sort.name"/></a>
+<a href="controller?mainPage=1&sort=places" class="btn btn-primary my-2"><fmt:message key="index.sort.places"/></a>
 
-<a href="#" class="btn btn-primary my-2"><fmt:message key="index.sort.datetime"/></a>
-<a href="#" class="btn btn-primary my-2 "><fmt:message key="index.sort.name"/></a>
-<a href="#" class="btn btn-primary my-2"><fmt:message key="index.sort.places"/></a>
+<a class="nav-link dropdown-toggle" href="#" id="Admin" role="button"
+   data-bs-toggle="dropdown" aria-expanded="false">
+<c:if test="${ limitPlaces==false }">
+    <fmt:message key="index.allSession"/>
+</c:if>
+    <c:if test="${limitPlaces==true}">
+        <fmt:message key="index.limitSession"/>
+    </c:if>
+</a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <li><a class="dropdown-item"
+           href="controller?mainPage=1&limitPlaces=true"><fmt:message key="index.limitSession"/></a></li>
+    <li><a class="dropdown-item"
+           href="controller?mainPage=1&limitPlaces=false"><fmt:message key="index.allSession"/></a></li>
+
+</ul>
+</div>
+
 <c:if test="${mainCell1 == null}">
     <h1 class="text-center">
 
@@ -43,7 +62,8 @@
                     <p class="card-text mb-auto"><h6><fmt:message
                         key="index.session.genre"/> ${mainCell1.film.genre}</h6>
                     <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainCell1.film.price}
-                    <fmt:message key="index.session.UAH"/></h6>
+                    <fmt:message key="index.session.UAH"/>  ${hallCapacity}</h6>
+                    <fmt:message key="index.freePlaces"/> ${maxHallCapacity - mainCell1.numberOfTickets}
 
                 </div>
 
@@ -69,6 +89,7 @@
                     key="index.session.genre"/> ${mainCell2.film.genre}</h6>
                 <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainCell2.film.price}
                 <fmt:message key="index.session.UAH"/></h6>
+                <fmt:message key="index.freePlaces"/> ${maxHallCapacity - mainCell2.numberOfTickets}
 
             </div>
 
@@ -95,7 +116,7 @@
                         key="index.session.genre"/> ${mainCell3.film.genre}</h6>
                     <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainCell3.film.price}
                     <fmt:message key="index.session.UAH"/></h6>
-
+                    <fmt:message key="index.freePlaces"/> ${maxHallCapacity - mainCell3.numberOfTickets}
                 </div>
 
             </div>
@@ -120,19 +141,19 @@
                     key="index.session.genre"/> ${mainCell4.film.genre}</h6>
                 <p class="card-text mb-auto"><h6><fmt:message key="index.session.price"/> ${mainCell4.film.price}
                 <fmt:message key="index.session.UAH"/></h6>
-
+                <fmt:message key="index.freePlaces"/> ${maxHallCapacity - mainCell4.numberOfTickets}
             </div>
         </div>
         </c:if>
     </div>
 </div>
 <div class="text-center">
-<c:if test="${mainCell1 != null}">
-    <c:if test="${temp.mainNextPage == null || temp.mainNextPage > 5 }">
-        <a href="controller?mainPage=${temp.mainPreviousPage}" class="btn btn-primary my-2">&#8592;<fmt:message
-                key="index.navigation.back"/></a>
+    <c:if test="${mainCell1 != null}">
+        <c:if test="${temp.mainNextPage == null || temp.mainNextPage > 5 }">
+            <a href="controller?mainPage=${temp.mainPreviousPage}" class="btn btn-primary my-2">&#8592;<fmt:message
+                    key="index.navigation.back"/></a>
+        </c:if>
     </c:if>
-</c:if>
     <c:if test="${temp.mainNextPage != null}">
         <a href="controller?mainPage=${temp.mainNextPage}" class="btn btn-primary my-2"><fmt:message
                 key="index.navigation.next"/>&#8594;</a>

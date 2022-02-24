@@ -1,8 +1,11 @@
 package model.dao.impl;
 
 import Entity.User;
+import exception.DBException;
 import model.dao.UserDao;
 import org.apache.log4j.Logger;
+
+import java.math.BigDecimal;
 import java.sql.*;
 
 public class UserDaoImpl implements UserDao {
@@ -10,7 +13,9 @@ public class UserDaoImpl implements UserDao {
     public static final String SELECT_USERS_WHERE_EMAIL_AND_PASSWORD =
             "SELECT * FROM users JOIN roles ON users.roleId = roles.roleId WHERE email = ? AND password = ?";
     public static final String SELECT_FROM_USERS_WHERE_EMAIL = "SELECT * FROM users WHERE email = ?";
+    public static final String SELECT_FROM_USERS_WHERE_ID = "SELECT * FROM users JOIN roles ON users.roleId = roles.roleId WHERE userId = ?";
     public static final String INSERT_VALUES_INTO_USERS = "INSERT into users(firstName, lastName, email, password) values(?,?,?,?)";
+    public static final String UPDATE_USER_BALANCE = "UPDATE users  SET balance = balance + ?  WHERE userId = ?";
 
     private final Connection connection;
 
@@ -24,18 +29,7 @@ public class UserDaoImpl implements UserDao {
             st.setString(1, email);
             st.setString(2, password);
             ResultSet resultSet = st.executeQuery();
-            while (resultSet.next()) {
-                user = new User();
-                user.setUserId(resultSet.getInt("userId"));
-                user.setEmail(resultSet.getString("email"));
-                user.setFirstName(resultSet.getString("firstName"));
-                user.setLastName(resultSet.getString("lastName"));
-                user.setPassword(resultSet.getString("password"));
-                user.setBalance(resultSet.getBigDecimal("balance"));
-                user.setPassword(resultSet.getString("password"));
-                user.setRole(resultSet.getString("role"));
-            }
-            return user;
+            return fillUser(resultSet);
         } catch (SQLException ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
@@ -82,6 +76,45 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public User updateBalance(User user, BigDecimal sum) {
+        try (PreparedStatement st = connection.prepareStatement(UPDATE_USER_BALANCE)) {
+            st.setBigDecimal(1, sum);
+            st.setInt(2, user.getUserId());
+            st.execute();
+            return findUserById(user.getUserId());
+        } catch (SQLException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+            throw new DBException();
+        }
+    }
+
+    public User findUserById(int userId) {
+        try (PreparedStatement st = connection.prepareStatement(SELECT_FROM_USERS_WHERE_ID)) {
+            st.setInt(1, userId);
+            ResultSet resultSet = st.executeQuery();
+            return fillUser(resultSet);
+        } catch (SQLException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        }
+        return null;
+    }
+
+    private User fillUser(ResultSet resultSet) throws SQLException {
+        User user = null;
+        while (resultSet.next()) {
+            user = new User();
+            user.setUserId(resultSet.getInt("userId"));
+            user.setEmail(resultSet.getString("email"));
+            user.setFirstName(resultSet.getString("firstName"));
+            user.setLastName(resultSet.getString("lastName"));
+            user.setPassword(resultSet.getString("password"));
+            user.setBalance(resultSet.getBigDecimal("balance"));
+            user.setPassword(resultSet.getString("password"));
+            user.setRole(resultSet.getString("role"));
+        }
+        return user;
+    }
 
     @Override
     public void close() {

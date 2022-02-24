@@ -4,7 +4,6 @@ import Entity.Film;
 import Entity.Session;
 import model.dao.SessionDao;
 import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +14,10 @@ import java.util.List;
 public class SessionDaoImpl implements SessionDao {
     private static final Logger LOGGER = Logger.getLogger(SessionDaoImpl.class);
 
-    private static final String SELECT_ALL_LIMIT_ORDERED_BY_DATA_TIME = "SELECT * FROM sessions s JOIN films f ON" +
-            " s.filmId = f.filmId ORDER BY ? LIMIT ?, ?;";
+    private static final String SELECT_ALL_LIMIT_ORDERED_BY = "SELECT * FROM sessions s JOIN films f ON" +
+            " s.filmId = f.filmId WHERE numberOfTickets < ? ORDER BY ? LIMIT ?, ?;";
+/*    private static final String SELECT_ALL_LIMIT_ORDERED_BY = "SELECT * FROM sessions s JOIN films f ON" +
+            " s.filmId = f.filmId WHERE numberOfTickets < ?" + " ORDER BY  name='" + nameVar + "' LIMIT ?, ?;";*/
 
     private final Connection connection;
 
@@ -40,12 +41,16 @@ public class SessionDaoImpl implements SessionDao {
     }
 
     @Override
-    public List<Session> findAllPage(String orderBy, int start, int end) {
+    public List<Session> findAllPage(String orderBy, int start, int end, int ticketLimit) {
         List<Session> session = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SELECT_ALL_LIMIT_ORDERED_BY_DATA_TIME)) {
-            ps.setString(1, orderBy);
-            ps.setInt(2, start);
-            ps.setInt(3, end);
+        LOGGER.debug("orderBy ={" + orderBy + "}");
+        orderBy = orderBy.replace("'","");
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_ALL_LIMIT_ORDERED_BY)) {
+            ps.setInt(1, ticketLimit);
+            ps.setString(2, orderBy);
+            ps.setInt(3, start);
+            ps.setInt(4, end);
+            LOGGER.debug("WTF = " + ps.executeQuery().toString());
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -58,6 +63,11 @@ public class SessionDaoImpl implements SessionDao {
             LOGGER.error(ex.getMessage(), ex);
         }
         return session;
+    }
+
+    @Override
+    public boolean updateTickets() {
+        return false;
     }
 
     private Session sessionResultSet(ResultSet resultSet) throws SQLException {
@@ -75,6 +85,7 @@ public class SessionDaoImpl implements SessionDao {
         film.setPrice(resultSet.getBigDecimal("price"));
         film.setReleaseYear(resultSet.getInt("releaseYear"));
         session.setFilm(film);
+        session.setNumberOfTickets(resultSet.getInt("numberOfTickets"));
         return session;
     }
 }

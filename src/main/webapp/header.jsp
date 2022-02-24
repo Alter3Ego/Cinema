@@ -21,7 +21,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg  navbar-light" style="background-color: #E7DB0BFF">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #E7DB0BFF">
         <div class="container-xl">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
@@ -38,10 +38,27 @@
                         <button class="btn btn-outline-success" type="submit"><fmt:message
                                 key="header.search"/></button>
                     </form>
+                    <%-- Admin--%>
+                    <c:if test="${user.role == 'admin'}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="Admin" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" <fmt:setLocale value="en_EN" scope="session"/>
+                                       href="${pageContext.request.contextPath}?sessionLocale=en">EN</a></li>
+                                <li><a class="dropdown-item" <fmt:setLocale value="ua_UA" scope="session"/>
+                                       href="${pageContext.request.contextPath}?sessionLocale=ua">UA</a></li>
+
+                            </ul>
+                        </li>
+                    </c:if>
                 </ul>
+
                 <ul class="d-flex align-items-end navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="user.jsp">
                             <c:if test="${user.userId == null}">
                                 <p><fmt:message key="header.greetings.anon"/></p>
                             </c:if>
@@ -52,7 +69,8 @@
                     </li>
                     <c:if test="${user.userId != null}">
                         <li class="nav-item">
-                            <a class="dropdown-item" href="controller?command=logOut"><fmt:message key="header.signOut"/></a>
+                            <a class="dropdown-item" href="controller?command=logOut"><fmt:message
+                                    key="header.signOut"/></a>
                         </li>
                     </c:if>
                     <c:if test="${user.userId == null}">
@@ -62,7 +80,8 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="login.jsp"><fmt:message key="header.logIn"/></a>
                                 </li>
-                                <li><a class="dropdown-item" href="signUp.jsp"><fmt:message key="header.signUp"/></a></li>
+                                <li><a class="dropdown-item" href="signUp.jsp"><fmt:message key="header.signUp"/></a>
+                                </li>
                             </ul>
                         </li>
                     </c:if>
