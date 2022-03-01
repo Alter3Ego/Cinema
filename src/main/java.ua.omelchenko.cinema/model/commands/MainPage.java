@@ -65,11 +65,11 @@ public class MainPage implements Command {
         int limit = request.getSession().getAttribute("limitPlaces").equals(true) ? NUMBER_OF_PLACES : NUMBER_OF_PLACES_OVER;
 
         String sort = request.getParameter("sort");
-        String paginationSort = "dataTime";
+        String paginationSort = "dateTime";
         if (sort != null) {
             switch (sort) {
-                case "datetime":
-                    request.getSession().setAttribute("sort", "dataTime");
+                case "dateTime":
+                    request.getSession().setAttribute("sort", "dateTime");
                     break;
                 case "name":
                     request.getSession().setAttribute("sort", "title");

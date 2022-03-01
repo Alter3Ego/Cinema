@@ -14,7 +14,7 @@
 
 <body style="background-color: #7cb5bd">
 <div>
-<a href="controller?mainPage=1&sort=datetime" class="btn btn-primary my-2"><fmt:message key="index.sort.datetime"/></a>
+<a href="controller?mainPage=1&sort=dateTime" class="btn btn-primary my-2"><fmt:message key="index.sort.datetime"/></a>
 <a href="controller?mainPage=1&sort=name" class="btn btn-primary my-2 "><fmt:message key="index.sort.name"/></a>
 <a href="controller?mainPage=1&sort=places" class="btn btn-primary my-2"><fmt:message key="index.sort.places"/></a>
 

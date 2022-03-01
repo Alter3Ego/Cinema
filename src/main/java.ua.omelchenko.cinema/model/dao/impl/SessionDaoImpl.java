@@ -4,6 +4,9 @@ import Entity.Film;
 import Entity.Session;
 import model.dao.SessionDao;
 import org.apache.log4j.Logger;
+
+import java.io.Reader;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,11 +16,10 @@ import java.util.List;
 
 public class SessionDaoImpl implements SessionDao {
     private static final Logger LOGGER = Logger.getLogger(SessionDaoImpl.class);
-
-    private static final String SELECT_ALL_LIMIT_ORDERED_BY = "SELECT * FROM sessions s JOIN films f ON" +
-            " s.filmId = f.filmId WHERE numberOfTickets < ? ORDER BY ? LIMIT ?, ?;";
+    public static final String SELECT_WHERE_ORDER_ = "SELECT * FROM sessions s JOIN films f ON s.filmId = f.filmId WHERE numberOfTickets < ? ORDER BY ";
+    public static final String _BY_LIMIT = " LIMIT ?, ?;";
 /*    private static final String SELECT_ALL_LIMIT_ORDERED_BY = "SELECT * FROM sessions s JOIN films f ON" +
-            " s.filmId = f.filmId WHERE numberOfTickets < ?" + " ORDER BY  name='" + nameVar + "' LIMIT ?, ?;";*/
+            " s.filmId = f.filmId WHERE numberOfTickets < ? ORDER BY ? LIMIT ?, ?;";*/
 
     private final Connection connection;
 
@@ -43,14 +45,13 @@ public class SessionDaoImpl implements SessionDao {
     @Override
     public List<Session> findAllPage(String orderBy, int start, int end, int ticketLimit) {
         List<Session> session = new ArrayList<>();
-        LOGGER.debug("orderBy ={" + orderBy + "}");
-        orderBy = orderBy.replace("'","");
-        try (PreparedStatement ps = connection.prepareStatement(SELECT_ALL_LIMIT_ORDERED_BY)) {
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_WHERE_ORDER_ +
+                orderBy +
+                _BY_LIMIT)) {
             ps.setInt(1, ticketLimit);
-            ps.setString(2, orderBy);
-            ps.setInt(3, start);
-            ps.setInt(4, end);
-            LOGGER.debug("WTF = " + ps.executeQuery().toString());
+            ps.setInt(2, start);
+            ps.setInt(3, end);
+            //LOGGER.debug("WTF = " + ps.executeQuery().toString());
 
             ResultSet resultSet = ps.executeQuery();
 
