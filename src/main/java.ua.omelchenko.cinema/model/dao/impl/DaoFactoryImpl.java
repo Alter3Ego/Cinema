@@ -1,8 +1,6 @@
 package model.dao.impl;
 
-import model.dao.DaoFactory;
-import model.dao.SessionDao;
-import model.dao.UserDao;
+import model.dao.*;
 import model.database.DataBaseUtility;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -18,8 +16,18 @@ public class DaoFactoryImpl extends DaoFactory {
     }
 
     @Override
+    public TicketDao createTicketDao() {
+        return new TicketDaoImpl(getConnection());
+    }
+
+    @Override
     public SessionDao createSessionDao() {
         return new SessionDaoImpl(getConnection());
+    }
+
+    @Override
+    public FilmDao createFilmDao() {
+        return new FilmDaoImpl(getConnection());
     }
 
     private Connection getConnection() {

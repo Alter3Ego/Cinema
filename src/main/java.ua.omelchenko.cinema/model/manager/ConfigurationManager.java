@@ -2,6 +2,9 @@ package model.manager;
 
 import java.util.ResourceBundle;
 
+/**
+ * Getting data from config.properties
+ */
 public class ConfigurationManager {
 
     private static ConfigurationManager instance;
@@ -19,10 +22,13 @@ public class ConfigurationManager {
 
 
     public static final String ERROR_PAGE_PATH = "ERROR_PAGE_PATH";
+    public static final String ERROR_404_PAGE_PATH = "ERROR_404_PAGE_PATH";
+    public static final String SESSION_PAGE_PATH = "SESSION_PAGE_PATH";
     public static final String LOGIN_PAGE_PATH = "LOGIN_PAGE_PATH";
     public static final String SIGN_UP_PAGE_PATH = "SIGN_UP_PAGE_PATH";
     public static final String MAIN_PAGE_PATH = "MAIN_PAGE_PATH";
     public static final String USER_PAGE_PATH = "USER_PAGE_PATH";
+    public static final String ADD_SESSION_PATH = "ADD_SESSION_PATH";
 
     public static final String HALL_CAPACITY = "HALL_CAPACITY";
 
@@ -38,9 +44,8 @@ public class ConfigurationManager {
     public String getProperty(String key) {
         return (String) resourceBundle.getObject(key);
     }
+
     public Integer getNumberProperty(String key) {
-        return  Integer.valueOf( (String) resourceBundle.getObject(key));
+        return Integer.valueOf((String) resourceBundle.getObject(key));
     }
-
-
 }

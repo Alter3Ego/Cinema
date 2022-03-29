@@ -3,7 +3,7 @@ package Entity;
 import java.math.BigDecimal;
 
 public class Film {
-    private int filmId;
+    private Integer filmId;
     private String title;
     private int releaseYear;
     private BigDecimal price;

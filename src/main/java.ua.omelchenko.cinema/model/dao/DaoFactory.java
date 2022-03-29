@@ -4,7 +4,10 @@ import model.dao.impl.DaoFactoryImpl;
 
 public abstract class DaoFactory {
     public abstract UserDao createUserDao();
+    public abstract TicketDao createTicketDao();
     public abstract SessionDao createSessionDao();
+    public abstract FilmDao createFilmDao();
+
 
     private static final class DaoFactoryHolder {
         static final DaoFactory daoFactory = new DaoFactoryImpl();

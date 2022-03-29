@@ -1,20 +1,20 @@
 package model.commands;
 
 import Entity.Session;
-import controller.Controller;
 import controller.TemporaryAttributes;
 import model.dao.DaoFactory;
 import model.manager.ConfigurationManager;
 import model.service.SessionService;
 import model.service.impl.SessionServiceImpl;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class MainPage implements Command {
-    private static final Logger LOGGER = Logger.getLogger(MainPage.class);
+/**
+ * Load the index.jsp page
+ */
+public class MainPageCommand implements Command {
     public static final int NUMBERS_OF_OBJECTS = 4;
     public static final int ONE_MORE_OBJECT = NUMBERS_OF_OBJECTS + 1;
     public static final int NUMBER_OF_PLACES = ConfigurationManager.getInstance()
@@ -22,7 +22,6 @@ public class MainPage implements Command {
     public static final int NUMBER_OF_PLACES_OVER = NUMBER_OF_PLACES + 10;
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.debug("This is check attribute: " + request.getParameter("customSwitch1"));
         Integer number = (Integer) request.getSession().getAttribute("currentMainPage");
 
         if (request.getParameter("mainPage") != null) {
@@ -46,6 +45,9 @@ public class MainPage implements Command {
 
     }
 
+    /**
+     * Implementation of pagination for 4 cells
+     */
     private void pagination(HttpServletRequest request, Integer previousPage) {
         SessionService sessionService = new SessionServiceImpl(DaoFactory.getInstance());
         int start = 0;
@@ -82,7 +84,7 @@ public class MainPage implements Command {
         if (request.getSession().getAttribute("sort") != null) {
             paginationSort = (String) request.getSession().getAttribute("sort");
         }
-        LOGGER.debug("paginationSort " + paginationSort);
+
         int end = start + ONE_MORE_OBJECT;
         List<Session> sessionList = sessionService.getServicesOrderByLimits(paginationSort, start, end, limit);
         TemporaryAttributes tA = (TemporaryAttributes) request.getSession().getAttribute("temp");
