@@ -3,7 +3,7 @@ package Entity;
 import java.util.Date;
 
 public class Session {
-    private int sessionId;
+    private Integer sessionId;
     private Date dateTime;
     private Film film;
     private Integer numberOfTickets;
