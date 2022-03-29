@@ -26,7 +26,7 @@
 
 <h1 class="text-center">
 
-    <a href="controller"><fmt:message key="error.return.message"/></a>
+    <a href="${pageContext.request.contextPath}/controller"><fmt:message key="error.return.message"/></a>
 
 </h1>
 

@@ -31,7 +31,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="controller?mainPage=1">MyCINEMA</a>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/controller?mainPage=1">MyCINEMA</a>
                     </li>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" aria-label="Search">
@@ -47,9 +47,9 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" <fmt:setLocale value="en_EN" scope="session"/>
-                                       href="${pageContext.request.contextPath}?sessionLocale=en">EN</a></li>
-                                <li><a class="dropdown-item" <fmt:setLocale value="ua_UA" scope="session"/>
-                                       href="${pageContext.request.contextPath}?sessionLocale=ua">UA</a></li>
+                                       href="${pageContext.request.contextPath}/admin/addSession.jsp">Add session</a></li>
+                                <%--<li><a class="dropdown-item" <fmt:setLocale value="ua_UA" scope="session"/>
+                                       href="${pageContext.request.contextPath}?sessionLocale=ua">UA</a></li>--%>
 
                             </ul>
                         </li>
@@ -58,7 +58,7 @@
 
                 <ul class="d-flex align-items-end navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="user.jsp">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/user.jsp">
                             <c:if test="${user.userId == null}">
                                 <p><fmt:message key="header.greetings.anon"/></p>
                             </c:if>
@@ -69,7 +69,7 @@
                     </li>
                     <c:if test="${user.userId != null}">
                         <li class="nav-item">
-                            <a class="dropdown-item" href="controller?command=logOut"><fmt:message
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/controller?command=logOut"><fmt:message
                                     key="header.signOut"/></a>
                         </li>
                     </c:if>
