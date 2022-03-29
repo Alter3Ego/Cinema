@@ -9,5 +9,6 @@ public interface UserService {
     boolean checkEmail(String email);
     boolean addUser(User user);
     User updateBalance(User user, BigDecimal sum);
+    User getUserById(int id);
 
 }

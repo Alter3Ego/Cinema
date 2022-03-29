@@ -82,14 +82,16 @@ public class UserDaoImpl implements UserDao {
             st.setBigDecimal(1, sum);
             st.setInt(2, user.getUserId());
             st.execute();
-            return findUserById(user.getUserId());
+            return getById(user.getUserId());
         } catch (SQLException ex) {
             LOGGER.error(ex.getMessage(), ex);
             throw new DBException();
         }
     }
 
-    public User findUserById(int userId) {
+
+
+    public User getById(int userId) {
         try (PreparedStatement st = connection.prepareStatement(SELECT_FROM_USERS_WHERE_ID)) {
             st.setInt(1, userId);
             ResultSet resultSet = st.executeQuery();

@@ -40,4 +40,10 @@ public class UserServiceImpl implements UserService {
             return dao.updateBalance(user,sum);
         }
     }
+    @Override
+    public User getUserById(int id){
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.getById(id);
+        }
+    }
 }

@@ -3,7 +3,7 @@ package Entity;
 import java.math.BigDecimal;
 
 public class User {
-    private int userId;
+    private Integer userId;
     private String firstName;
     private String lastName;
     private String email;
