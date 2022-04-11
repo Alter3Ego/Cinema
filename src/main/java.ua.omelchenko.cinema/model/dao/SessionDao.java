@@ -10,4 +10,5 @@ public interface SessionDao extends EntityDao<Session> {
     Session getById(int id);
     Session updateTickets(Session session, int number);
     boolean createSession(Integer filmId, Date datetime);
+    boolean deleteSession(Session session);
 }

@@ -41,4 +41,11 @@ public class SessionServiceImpl implements SessionService {
             return dao.createSession(filmId, datetime);
         }
     }
+
+    @Override
+    public boolean deleteThisSession(Session session) {
+        try (SessionDao dao = daoFactory.createSessionDao()) {
+            return dao.deleteSession(session);
+        }
+    }
 }

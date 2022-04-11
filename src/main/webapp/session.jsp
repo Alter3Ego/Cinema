@@ -56,6 +56,17 @@
             </div>
 
         </div>
+        <c:if test="${user.role == 'admin'}">
+        <div class="col-md-4">
+
+            <a class="btn btn-danger" href="${pageContext.request.contextPath}/controller?command=removeSession"
+               role="button"><fmt:message key="session.remove.button"/></a>
+
+        </div>
+        </c:if>
+
+
+
         <script>
             var tickets = [];
             let status = false;

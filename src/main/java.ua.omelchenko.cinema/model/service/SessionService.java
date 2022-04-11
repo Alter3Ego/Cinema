@@ -9,4 +9,5 @@ public interface SessionService {
     Session getSessionById(int sessionId);
     Session updateNumberOfTickets(Session session, int number);
     boolean addSession(Integer filmId, java.util.Date datetime);
+    boolean deleteThisSession(Session session);
 }

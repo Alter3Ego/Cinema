@@ -2,6 +2,7 @@ package model;
 
 import model.commands.*;
 import model.commands.admin.AddSessionActionCommand;
+import model.commands.admin.RemoveSessionCommand;
 import model.commands.admin.SessionAddPageCommand;
 import model.commands.user.LogoutCommand;
 import model.commands.user.UpdateBalance;
@@ -27,7 +28,7 @@ public class RequestHelper {
         commands.put("sessionPage", new SessionPageCommand());
         commands.put("sessionAddPage", new SessionAddPageCommand());
         commands.put("addSessionAction", new AddSessionActionCommand());
-
+        commands.put("removeSession", new RemoveSessionCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

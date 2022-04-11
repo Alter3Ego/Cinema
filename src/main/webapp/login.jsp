@@ -12,7 +12,7 @@
 </head>
 
 <jsp:include page="header.jsp"/>
-<body class="text-center" class="p-3 mb-2 bg-secondary text-white text-align: center" style="background-color: #7cb5bd">
+<body class="text-center" style="background-color: #7cb5bd">
 
 <h3><fmt:message key="login.title"/></h3>
 <form name="loginForm" method="POST" action="controller">

@@ -78,7 +78,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User updateBalance(User user, BigDecimal sum) {
-        try (PreparedStatement st = connection.prepareStatement(UPDATE_USER_BALANCE)) {
+        return updateBalanceUser(user, sum, connection);
+    }
+    @Override
+    public User updateBalance(User user, BigDecimal sum,Connection outsideConnection) {
+        return updateBalanceUser(user, sum, outsideConnection);
+    }
+
+    private User updateBalanceUser(User user, BigDecimal sum, Connection outsideConnection) {
+        try (PreparedStatement st = outsideConnection.prepareStatement(UPDATE_USER_BALANCE)) {
             st.setBigDecimal(1, sum);
             st.setInt(2, user.getUserId());
             st.execute();
@@ -88,7 +96,6 @@ public class UserDaoImpl implements UserDao {
             throw new DBException();
         }
     }
-
 
 
     public User getById(int userId) {
@@ -102,7 +109,7 @@ public class UserDaoImpl implements UserDao {
         return null;
     }
 
-    private User fillUser(ResultSet resultSet) throws SQLException {
+    public User fillUser(ResultSet resultSet) throws SQLException {
         User user = null;
         while (resultSet.next()) {
             user = new User();

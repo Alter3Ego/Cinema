@@ -2,7 +2,12 @@ package model.dao.impl;
 
 import Entity.Film;
 import Entity.Session;
+import model.dao.DaoFactory;
 import model.dao.SessionDao;
+import model.service.SessionService;
+import model.service.UserService;
+import model.service.impl.SessionServiceImpl;
+import model.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -85,7 +90,7 @@ public class SessionDaoImpl implements SessionDao {
             st.setInt(1, number);
             st.setInt(2, session.getSessionId());
             st.execute();
-
+            return getById(session.getSessionId());
         } catch (SQLException ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
@@ -105,12 +110,55 @@ public class SessionDaoImpl implements SessionDao {
         return false;
     }
 
+    @Override
+    public boolean deleteSession(Session session) {
+        try {
+            connection.setAutoCommit(false);
+
+            try (PreparedStatement select = connection.prepareStatement("SELECT * FROM tickets where sessionId = ?;");
+                 PreparedStatement delete = connection.prepareStatement("DELETE FROM sessions where sessionId = ?");
+                 Statement stmt = connection.createStatement();
+            ) {
+                select.setInt(1, session.getSessionId());
+                ResultSet resultSet = select.executeQuery();
+                while (resultSet.next()) {
+                    UserService userService = new UserServiceImpl(DaoFactory.getInstance());
+                    userService.updateBalance(userService.getUserById(resultSet.getInt("userId")),
+                            session.getFilm().getPrice(), connection);
+                    LOGGER.debug("resultSet = " + resultSet.getInt("ticketId"));
+                }
+                delete.setInt(1, session.getSessionId());
+
+                stmt.execute("SET FOREIGN_KEY_CHECKS=0");
+                delete.executeUpdate();
+                stmt.execute("SET FOREIGN_KEY_CHECKS=1");
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+            try {
+
+                connection.rollback();
+            } catch (SQLException e) {
+                LOGGER.error(ex.getMessage(), ex);
+            }
+            return false;
+        } finally {
+            try {
+
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                LOGGER.error(ex.getMessage(), ex);
+            }
+        }
+    }
+
 
     private Session sessionResultSet(ResultSet resultSet) throws SQLException {
         if (resultSet == null) {
             return null;
         }
-        LOGGER.debug(resultSet);
         Session session = new Session();
         session.setSessionId(resultSet.getInt("sessionId"));
         session.setDateTime(resultSet.getTimestamp("dateTime"));
