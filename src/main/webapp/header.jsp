@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--<%@ taglib prefix="ex" uri="WEB-INF/custom.tld" %>--%>
-<%--<%@ taglib prefix="ex" uri="custom.tld" %>--%>
+<%@taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@ page isELIgnored="false" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
@@ -38,19 +37,16 @@
                         <button class="btn btn-outline-success" type="submit"><fmt:message
                                 key="header.search"/></button>
                     </form>
-                    <%-- Admin--%>
+
                     <c:if test="${user.role == 'admin'}">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="Admin" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Admin
+                                <fmt:message key="header.admin"/>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" <fmt:setLocale value="en_EN" scope="session"/>
-                                       href="${pageContext.request.contextPath}/admin/addSession.jsp">Add session</a></li>
-                                <%--<li><a class="dropdown-item" <fmt:setLocale value="ua_UA" scope="session"/>
-                                       href="${pageContext.request.contextPath}?sessionLocale=ua">UA</a></li>--%>
-
+                                       href="${pageContext.request.contextPath}/admin/addSession.jsp"> <fmt:message key="header.addSession"/></a></li>
                             </ul>
                         </li>
                     </c:if>
@@ -63,7 +59,13 @@
                                 <p><fmt:message key="header.greetings.anon"/></p>
                             </c:if>
                             <c:if test="${user.userId != null}">
-                                <p><fmt:message key="header.greetings.user"/> ${user.firstName}</p>
+                              <%--  <p><fmt:message key="header.greetings.user"/> ${user.firstName}</p>--%>
+                                <p><fmt:message key="header.greetings.user"/>
+                                <tags:fullUserName
+                                       firstName="${user.firstName}"
+                                       lastName="${user.lastName}"/>
+
+                                </p>
                             </c:if>
                         </a>
                     </li>
