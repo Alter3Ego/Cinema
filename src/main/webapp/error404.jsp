@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Error404</title>
@@ -13,7 +14,7 @@
             <p style=" text-align:center; font-size: 10rem">Error 404 </p>
             <h1 class="text-center">
 
-                <a style=" font-size: 5rem" href="${pageContext.request.contextPath}/controller">Повернутися на головну</a>
+                <a style=" font-size: 5rem" href="${pageContext.request.contextPath}/controller"><fmt:message key="error.return.message"/></a>
 
             </h1>
 

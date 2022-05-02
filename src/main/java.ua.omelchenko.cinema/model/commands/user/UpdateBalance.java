@@ -17,7 +17,6 @@ public class UpdateBalance implements Command {
     private static final Logger LOGGER = Logger.getLogger(UpdateBalance.class);
     private static final String PARAM_NAME_SUM = "sum";
     private static final String REGEX_SUM = "\\d{1,8}";
-    //"\\d{1,8}[.,]?\\d{0,2}";
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse response) {

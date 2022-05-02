@@ -20,6 +20,7 @@ public class MainPageCommand implements Command {
     public static final int NUMBER_OF_PLACES = ConfigurationManager.getInstance()
             .getNumberProperty(ConfigurationManager.HALL_CAPACITY);
     public static final int NUMBER_OF_PLACES_OVER = NUMBER_OF_PLACES + 10;
+    SessionService sessionService = new SessionServiceImpl(DaoFactory.getInstance());
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         Integer number = (Integer) request.getSession().getAttribute("currentMainPage");
@@ -48,8 +49,8 @@ public class MainPageCommand implements Command {
     /**
      * Implementation of pagination for 4 cells
      */
-    private void pagination(HttpServletRequest request, Integer previousPage) {
-        SessionService sessionService = new SessionServiceImpl(DaoFactory.getInstance());
+    void pagination(HttpServletRequest request, Integer previousPage) {
+
         int start = 0;
         if (previousPage != null) {
             start = previousPage - 1;
@@ -87,6 +88,10 @@ public class MainPageCommand implements Command {
 
         int end = start + ONE_MORE_OBJECT;
         List<Session> sessionList = sessionService.getServicesOrderByLimits(paginationSort, start, end, limit);
+        extracted(request, end, sessionList);
+    }
+
+    protected void extracted(HttpServletRequest request, int end, List<Session> sessionList) {
         TemporaryAttributes tA = (TemporaryAttributes) request.getSession().getAttribute("temp");
         tA.setMainPreviousPage(end - NUMBERS_OF_OBJECTS * 2);
         if (sessionList.size() >= ONE_MORE_OBJECT) {

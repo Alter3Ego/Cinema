@@ -36,17 +36,7 @@ public class SignUpCommand implements Command {
         String email = req.getParameter(PARAM_NAME_EMAIL);
         String password = req.getParameter(PARAM_NAME_PASSWORD);
 
-        if (firstName == null || lastName == null ||
-                email == null || password == null) {
-
-            return page;
-        }
-        if (
-                !(firstName.matches(REGEX_NAME_UA) || firstName.matches(REGEX_NAME_EN)) ||
-                        !(lastName.matches(REGEX_NAME_UA) || lastName.matches(REGEX_NAME_EN)) ||
-                        !(email.matches(REGEX_EMAIL) && email.length() < 255) ||
-                        !(password.matches(REGEX_PASSWORD) && password.length() < 50)
-        ) {
+        if (wrongInputCheck(firstName, lastName, email, password)){
             TemporaryAttributes tA = (TemporaryAttributes) req.getSession().getAttribute("temp");
             tA.setSignUpDataError(true);
             req.getSession().setAttribute("temp", tA);
@@ -72,5 +62,17 @@ public class SignUpCommand implements Command {
             }
         }
         return page;
+    }
+
+    protected boolean wrongInputCheck(String firstName, String lastName, String email, String password) {
+        if (firstName == null || lastName == null ||
+                email == null || password == null) {
+
+            return true;
+        }
+        return !(firstName.matches(REGEX_NAME_UA) || firstName.matches(REGEX_NAME_EN)) ||
+                !(lastName.matches(REGEX_NAME_UA) || lastName.matches(REGEX_NAME_EN)) ||
+                !(email.matches(REGEX_EMAIL) && email.length() < 255) ||
+                !(password.matches(REGEX_PASSWORD) && password.length() < 50);
     }
 }

@@ -4,9 +4,7 @@ import Entity.Film;
 import Entity.Session;
 import model.dao.DaoFactory;
 import model.dao.SessionDao;
-import model.service.SessionService;
 import model.service.UserService;
-import model.service.impl.SessionServiceImpl;
 import model.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 
@@ -117,7 +115,7 @@ public class SessionDaoImpl implements SessionDao {
 
             try (PreparedStatement select = connection.prepareStatement("SELECT * FROM tickets where sessionId = ?;");
                  PreparedStatement delete = connection.prepareStatement("DELETE FROM sessions where sessionId = ?");
-                 Statement stmt = connection.createStatement();
+                 Statement stmt = connection.createStatement()
             ) {
                 select.setInt(1, session.getSessionId());
                 ResultSet resultSet = select.executeQuery();
