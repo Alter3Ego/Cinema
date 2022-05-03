@@ -6,6 +6,7 @@ import model.commands.admin.RemoveSessionCommand;
 import model.commands.admin.SessionAddPageCommand;
 import model.commands.user.LogoutCommand;
 import model.commands.user.UpdateBalance;
+import model.commands.user.UserPageCommand;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ public class RequestHelper {
         commands.put("sessionAddPage", new SessionAddPageCommand());
         commands.put("addSessionAction", new AddSessionActionCommand());
         commands.put("removeSession", new RemoveSessionCommand());
+        commands.put("userPage", new UserPageCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

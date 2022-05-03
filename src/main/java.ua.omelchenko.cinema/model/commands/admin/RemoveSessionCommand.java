@@ -18,7 +18,6 @@ public class RemoveSessionCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.debug("RemoveSessionCommand");
         Session session = null;
         User user = null;
         try {

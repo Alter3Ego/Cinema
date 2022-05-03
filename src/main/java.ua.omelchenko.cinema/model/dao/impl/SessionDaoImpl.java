@@ -123,7 +123,6 @@ public class SessionDaoImpl implements SessionDao {
                     UserService userService = new UserServiceImpl(DaoFactory.getInstance());
                     userService.updateBalance(userService.getUserById(resultSet.getInt("userId")),
                             session.getFilm().getPrice(), connection);
-                    LOGGER.debug("resultSet = " + resultSet.getInt("ticketId"));
                 }
                 delete.setInt(1, session.getSessionId());
 

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Register user
- */
+ */ 
 public class SignUpCommand implements Command {
     private static final String FIRST_NAME = "firstName";
     private static final String LAST_NAME = "lastName";

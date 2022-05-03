@@ -35,7 +35,6 @@ public class UpdateBalance implements Command {
         user = userService.updateBalance(user, new BigDecimal(sum));
 
         if (user == null) {
-            LOGGER.debug("User is null");
             page = ConfigurationManager.getInstance()
                     .getProperty(ConfigurationManager.ERROR_PAGE_PATH);
         } else {

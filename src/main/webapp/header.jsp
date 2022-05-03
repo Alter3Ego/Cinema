@@ -54,12 +54,11 @@
 
                 <ul class="d-flex align-items-end navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/user.jsp">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=userPage">
                             <c:if test="${user.userId == null}">
                                 <p><fmt:message key="header.greetings.anon"/></p>
                             </c:if>
                             <c:if test="${user.userId != null}">
-                              <%--  <p><fmt:message key="header.greetings.user"/> ${user.firstName}</p>--%>
                                 <p><fmt:message key="header.greetings.user"/>
                                 <tags:fullUserName
                                        firstName="${user.firstName}"
