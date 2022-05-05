@@ -20,7 +20,7 @@
 
 <a class="nav-link dropdown-toggle" href="#" id="Admin" role="button"
    data-bs-toggle="dropdown" aria-expanded="false">
-<c:if test="${ limitPlaces==false }">
+<c:if test="${ limitPlaces==false || limitPlaces==null }">
     <fmt:message key="index.allSession"/>
 </c:if>
     <c:if test="${limitPlaces==true}">

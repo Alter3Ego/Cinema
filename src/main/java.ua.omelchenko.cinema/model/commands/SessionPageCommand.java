@@ -17,8 +17,10 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Load sessionPage.jsp page
@@ -26,85 +28,71 @@ import java.util.*;
 public class SessionPageCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(SessionPageCommand.class);
     private static final String SESSION_ID = "sessionId";
-    public static final int NUMBER_OF_PLACES = ConfigurationManager.getInstance()
-            .getNumberProperty(ConfigurationManager.HALL_CAPACITY);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String id = request.getParameter(SESSION_ID);
         request.setAttribute("typeRequest", "POST");
-        Integer sessionId = null;
+        int sessionId = Integer.parseInt(request.getParameter(SESSION_ID));
 
-        if (id != null) {
-            try {
-                sessionId = Integer.valueOf(id);
-            } catch (NumberFormatException ex) {
-                LOGGER.error("NumberFormatException");
-            }
+        SessionService sessionService = new SessionServiceImpl(DaoFactory.getInstance());
+        TicketService ticketService = new TicketServiceImpl(DaoFactory.getInstance());
+        Session session = sessionService.getSessionById(sessionId);
+        TemporaryAttributes tA = (TemporaryAttributes) request.getSession().getAttribute("temp");
+        User user = ((User) request.getSession().getAttribute("user"));
+        String ticketsRequest = request.getParameter("tickets");
+        try {
+            ticketsRequest = request.getReader().lines().collect(Collectors.joining());
+        } catch (IOException e) {
+            LOGGER.error(e);
         }
 
-        if (sessionId != null) {
+        if (ticketsRequest != null && !ticketsRequest.equals("")) {
+            //Check login user
+            if (user != null) {
 
-            SessionService sessionService = new SessionServiceImpl(DaoFactory.getInstance());
-            TicketService ticketService = new TicketServiceImpl(DaoFactory.getInstance());
-            Session session = sessionService.getSessionById(sessionId);
-            TemporaryAttributes tA = (TemporaryAttributes) request.getSession().getAttribute("temp");
-            User user = ((User) request.getSession().getAttribute("user"));
-            String ticketsRequest = request.getParameter("tickets");
+                ticketsRequest = ticketsRequest.replaceAll("[\\[\\]]", "");
+                String[] items = ticketsRequest.split("\\s*,\\s*");
 
-            if (ticketsRequest != null && !ticketsRequest.equals("")) {
-                //Check login user
-                if (user != null) {
-
-                    ticketsRequest = ticketsRequest.replaceAll("place", "");
-                    String[] items = ticketsRequest.split("\\s*,\\s*");
-
-                    List<Integer> ticketInt = new ArrayList<>();
-                    for (String s : items) {
-                        ticketInt.add(Integer.valueOf(s));
-                    }
-                    UserService userService = new UserServiceImpl(DaoFactory.getInstance());
-                    user = userService.getUserById(user.getUserId());
-                    BigDecimal price = session.getFilm().getPrice().multiply(BigDecimal.valueOf(ticketInt.size()));
-
-                    //Transaction
-                    try {
-                        user = userService.updateBalance(user, price.multiply(BigDecimal.valueOf(-1)));
-                        if (ticketService.addTickets(session, user, ticketInt)) {
-                            session = sessionService.updateNumberOfTickets(session, ticketInt.size());
-                        } else {
-                            user = userService.updateBalance(user, price);
-                            tA.setOperationError(true);
-                        }
-                        if (user != null) {
-                            request.getSession().setAttribute("user", user);
-                        }
-                    } catch (DBException e) {
-                        LOGGER.error("DBException" + e);
-                        tA.setErrorBalance(true);
-                    }
-                } else {
-                    tA.setErrorLogInSession(true);
+                List<Integer> ticketInt = new ArrayList<>();
+                for (String s : items) {
+                    ticketInt.add(Integer.valueOf(s));
                 }
-            }
-            request.getSession().setAttribute("currentSession", session);
+                UserService userService = new UserServiceImpl(DaoFactory.getInstance());
+                user = userService.getUserById(user.getUserId());
+                BigDecimal price = session.getFilm().getPrice().multiply(BigDecimal.valueOf(ticketInt.size()));
 
-            //Get tickets
-            List<Ticket> tickets = ticketService.getTicketsBySessionId(sessionId);
-            HashMap<Integer, Integer> places = new HashMap<>();
-            for (int i = 1; i <= NUMBER_OF_PLACES; i++) {
-                places.put(i, null);
-            }
-            for (Ticket ticket : tickets) {
-                places.put(ticket.getPlace(), ticket.getUser());
-            }
-            tA.setPlaces(places);
+                //Transaction
+                try {
 
-            return ConfigurationManager.getInstance()
-                    .getProperty(ConfigurationManager.SESSION_PAGE_PATH);
+                    user = userService.updateBalance(user, price.multiply(BigDecimal.valueOf(-1)));
+                    if (ticketService.addTickets(session, user, ticketInt)) {
+                        session = sessionService.updateNumberOfTickets(session, ticketInt.size());
+                    } else {
+                        user = userService.updateBalance(user, price);
+                        tA.setOperationError(true);
+                    }
+                    request.getSession().setAttribute("user", user);
 
+                } catch (DBException e) {
+                    LOGGER.error("DBException" + e);
+                    tA.setErrorBalance(true);
+                }
+            } else {
+                tA.setErrorLogInSession(true);
+            }
         }
+        request.getSession().setAttribute("currentSession", session);
+
+        //Get tickets
+        List<Ticket> tickets = ticketService.getTicketsBySessionId(sessionId);
+        HashMap<Integer, Integer> places = new HashMap<>();
+
+        for (Ticket ticket : tickets) {
+            places.put(ticket.getPlace(), ticket.getUser());
+        }
+        tA.setPlaces(places);
+
         return ConfigurationManager.getInstance()
-                .getProperty(ConfigurationManager.ERROR_404_PAGE_PATH);
+                .getProperty(ConfigurationManager.SESSION_PAGE_PATH);
     }
 }

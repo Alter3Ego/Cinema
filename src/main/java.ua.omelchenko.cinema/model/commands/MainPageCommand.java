@@ -10,6 +10,8 @@ import model.service.impl.SessionServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Load the index.jsp page
@@ -55,31 +57,22 @@ public class MainPageCommand implements Command {
         if (previousPage != null) {
             start = previousPage - 1;
         }
-        String requestLimit = request.getParameter("limitPlaces");
-        if (requestLimit == null) {
-            if (request.getSession().getAttribute("limitPlaces") == null) {
-                request.getSession().setAttribute("limitPlaces", false);
-            }
-        } else if (requestLimit.equals("true")) {
-            request.getSession().setAttribute("limitPlaces", true);
-        } else {
-            request.getSession().setAttribute("limitPlaces", false);
+        //Limit property
+        String limitRequest = request.getParameter("limitPlaces");
+        if (!Objects.isNull(limitRequest)) {
+            request.getSession().setAttribute("limitPlaces", Boolean.valueOf(limitRequest));
         }
-        int limit = request.getSession().getAttribute("limitPlaces").equals(true) ? NUMBER_OF_PLACES : NUMBER_OF_PLACES_OVER;
-
+        Optional<Object> limitSession = Optional.ofNullable(request.getSession().getAttribute("limitPlaces"));
+        int limit = (limitSession.isPresent()) &&
+                (boolean) limitSession.get() ? NUMBER_OF_PLACES : NUMBER_OF_PLACES_OVER;
+        //Sort property
         String sort = request.getParameter("sort");
         String paginationSort = "dateTime";
         if (sort != null) {
             switch (sort) {
-                case "dateTime":
-                    request.getSession().setAttribute("sort", "dateTime");
-                    break;
-                case "name":
-                    request.getSession().setAttribute("sort", "title");
-                    break;
-                case "places":
-                    request.getSession().setAttribute("sort", "numberOfTickets");
-                    break;
+                case "dateTime" -> request.getSession().setAttribute("sort", "dateTime");
+                case "name" -> request.getSession().setAttribute("sort", "title");
+                case "places" -> request.getSession().setAttribute("sort", "numberOfTickets");
             }
         }
         if (request.getSession().getAttribute("sort") != null) {

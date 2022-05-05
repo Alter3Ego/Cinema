@@ -19,7 +19,7 @@ public class LoginCommand implements Command {
     private static final String PARAM_NAME_PASSWORD = "password";
 
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String page = null;
+        String page;
 
         String email = req.getParameter(PARAM_NAME_EMAIL);
         String pass = req.getParameter(PARAM_NAME_PASSWORD);

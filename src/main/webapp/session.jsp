@@ -8,6 +8,7 @@
 
 <html lang="${sessionScope.lang}">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Session</title>
 </head>
 
@@ -33,10 +34,10 @@
             <fmt:message key="index.session.UAH"/> ${hallCapacity}</h6>
             <fmt:message key="index.freePlaces"/> ${maxHallCapacity - currentSession.numberOfTickets}
             <br>
+            <button
+                    class="btn-primary" id="buy" ><fmt:message key="session.submit"/>
+            </button>
 
-
-            <button onclick="window.location='controller?command=sessionPage&sessionId=${currentSession.sessionId}&tickets=' + tickets"
-                    class="btn-primary" id="buy"><fmt:message key="session.submit"/></button>
             <div class="text-danger ">
                 <c:if test="${temp.errorLogInSession == true}">
                     <p>
@@ -65,21 +66,20 @@
         </div>
         </c:if>
 
-
-
         <script>
-            var tickets = [];
-            let status = false;
+            $(document).ready(function () {
+                let tickets = [];
+
+                let url = "controller?command=sessionPage&sessionId=${currentSession.sessionId}";
 
 
-            function start() {
                 let places = document.createElement('div');
                 let parent = document.querySelector('#parent');
                 let buy = document.getElementById('buy');
                 places.classList.add('p-3');
                 places.innerHTML = "<h1> <fmt:message key="session.buy.tickets"/> </h1>";
-                var user = "${user.userId}";
-                var mapObj = {
+                let user = "${user.userId}";
+                let placesInfo = {
                 <c:forEach items="${temp.places}" var="item" varStatus="loop">
                 ${item.key}:
                 '${item.value}'
@@ -87,69 +87,112 @@
                 </c:forEach>
             }
                 ;
+                console.log("UserId "+ user);
+                console.log("Places "+ placesInfo);
+
 
                 parent.insertBefore(places, buy);
+
                 for (let i = 0; i <= 15; i += 5) {
                     for (let j = 1; j <= 5; j++) {
-                        const button = document.createElement('button');
-                        button.style.height = '30px';
-                        button.style.width = '30px';
-                        button.textContent = "" + (j + i);
-                        button.id = "place" + (j + i);
-                        button.setAttribute("onclick", "changeValue(place" + (j + i) + ");");
+                        let placeNumber = i + j;
+                        console.log(placeNumber);
+                        console.log(placesInfo[placeNumber]);
+                        let userId = placesInfo[placeNumber];
+                        let button;
+                        if (userId) {
+                            if (userId === user) {
+                                button = generateAlreadyByedButton(placeNumber);
 
-                        var tic = mapObj[(j + i)];
-                        console.log(tic);
-                        if (tic !== ""
-                        ) {
-                            if (tic === user) {
-                                button.classList.add('btn-success');
+                            } else {
+                                button = generateButton(placeNumber);
                             }
                             button.disabled = true;
-
                         } else {
-                            button.classList.add('btn-primary');
+                            button = generateAvailableButton(placeNumber);
                         }
-                        console.log(button.getAttribute('aria-disabled'));
+                        console.log(button);
                         places.appendChild(button);
+
                     }
+
                     let br = document.createElement('br');
                     places.appendChild(br);
                 }
-                document.getElementById("color2").style.background = '#000000';
-            }
 
-            function changeValue(id) {
-
-                var elementClasses = document.getElementById(id);
-                console.log(id.classList.contains('btn-primary'));
-                if (id.classList.contains('btn-primary')) {
-                    id.classList.remove('btn-primary');
-                    id.classList.add('btn-warning');
-                    tickets.push(id.id);
-                    console.log(tickets);
-                } else {
-                    id.classList.remove('btn-warning');
-                    id.classList.add('btn-primary');
-                    removeA(tickets, id.id);
-                    console.log(tickets);
+                function generateButton(place) {
+                    let button = document.createElement('button');
+                    button.style.height = '30px';
+                    button.style.width = '30px';
+                    button.textContent = "" + place;
+                    button.id = "place" + place;
+                    button.onclick = () => changeValue(button.id, place);
+                    return button;
                 }
 
-            }
+                function generateAvailableButton(place) {
+                    let button = generateButton(place);
+                    button.classList.add('btn-primary');
+                    return button;
+                }
 
-            window.onload = start;
+                function generateAlreadyByedButton(place) {
+                    let button = generateButton(place);
+                    button.classList.add('btn-success');
+                    return button;
 
-            function removeA(arr) {
-                var what, a = arguments, L = a.length, ax;
-                while (L > 1 && arr.length) {
-                    what = a[--L];
-                    while ((ax = arr.indexOf(what)) !== -1) {
-                        arr.splice(ax, 1);
+                }
+
+
+                $("#buy").click(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: JSON.stringify(tickets),
+                        contentType: 'application/json',
+                        success: function (resp) {
+                            document.open();
+                            document.write(resp);
+                            document.close();
+                        }
+                    });
+
+                });
+
+
+                function changeValue(id, placeNumber) {
+
+                    let button = document.getElementById(id);
+                    if (button.classList.contains('btn-primary')) {
+                        button.classList.remove('btn-primary');
+                        button.classList.add('btn-warning');
+                        tickets.push(placeNumber);
+                        console.log(tickets);
+                    } else {
+                        button.classList.remove('btn-warning');
+                        button.classList.add('btn-primary');
+                        removeA(tickets, placeNumber);
+                        console.log(tickets);
                     }
+
                 }
-                return arr;
-            }
+
+
+                function removeA(arr) {
+                    var what, a = arguments, L = a.length, ax;
+                    while (L > 1 && arr.length) {
+                        what = a[--L];
+                        while ((ax = arr.indexOf(what)) !== -1) {
+                            arr.splice(ax, 1);
+                        }
+                    }
+                    return arr;
+                }
+
+            });
+
         </script>
+
     </div>
 
 </div>
