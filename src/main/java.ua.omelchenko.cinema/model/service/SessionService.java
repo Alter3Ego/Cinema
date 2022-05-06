@@ -1,6 +1,6 @@
 package model.service;
 
-import Entity.Session;
+import entity.Session;
 
 import java.util.List;
 

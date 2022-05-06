@@ -1,8 +1,8 @@
 package model.dao.impl;
 
-import Entity.Session;
-import Entity.Ticket;
-import Entity.User;
+import entity.Session;
+import entity.Ticket;
+import entity.User;
 import model.dao.TicketDao;
 import org.apache.log4j.Logger;
 

@@ -1,6 +1,6 @@
 package model.commands.user;
 
-import Entity.User;
+import entity.User;
 import controller.TemporaryAttributes;
 import model.commands.Command;
 import model.dao.DaoFactory;

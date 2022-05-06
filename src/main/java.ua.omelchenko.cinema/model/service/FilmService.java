@@ -1,6 +1,6 @@
 package model.service;
 
-import Entity.Film;
+import entity.Film;
 import java.util.List;
 
 public interface FilmService {

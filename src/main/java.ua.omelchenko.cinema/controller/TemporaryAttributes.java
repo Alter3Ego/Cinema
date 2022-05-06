@@ -1,6 +1,6 @@
 package controller;
 
-import Entity.Film;
+import entity.Film;
 
 import java.util.HashMap;
 import java.util.List;

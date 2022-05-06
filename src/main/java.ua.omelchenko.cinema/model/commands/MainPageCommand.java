@@ -1,6 +1,6 @@
 package model.commands;
 
-import Entity.Session;
+import entity.Session;
 import controller.TemporaryAttributes;
 import model.dao.DaoFactory;
 import model.manager.ConfigurationManager;

@@ -1,8 +1,8 @@
 package model.service;
 
-import Entity.Session;
-import Entity.Ticket;
-import Entity.User;
+import entity.Session;
+import entity.Ticket;
+import entity.User;
 
 import java.util.List;
 

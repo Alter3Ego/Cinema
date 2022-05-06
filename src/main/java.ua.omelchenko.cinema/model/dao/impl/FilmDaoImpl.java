@@ -1,6 +1,6 @@
 package model.dao.impl;
 
-import Entity.Film;
+import entity.Film;
 import model.dao.FilmDao;
 import org.apache.log4j.Logger;
 import java.sql.Connection;

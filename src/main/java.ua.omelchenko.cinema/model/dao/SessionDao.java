@@ -1,6 +1,6 @@
 package model.dao;
 
-import Entity.Session;
+import entity.Session;
 
 import java.util.Date;
 import java.util.List;

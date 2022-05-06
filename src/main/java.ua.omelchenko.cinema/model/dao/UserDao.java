@@ -1,6 +1,6 @@
 package model.dao;
 
-import Entity.User;
+import entity.User;
 
 import java.math.BigDecimal;
 import java.sql.Connection;

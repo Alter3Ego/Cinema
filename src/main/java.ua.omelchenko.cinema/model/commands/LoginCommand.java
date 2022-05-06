@@ -1,6 +1,6 @@
 package model.commands;
 
-import Entity.User;
+import entity.User;
 import controller.TemporaryAttributes;
 import model.dao.DaoFactory;
 import model.logic.PasswordHash;

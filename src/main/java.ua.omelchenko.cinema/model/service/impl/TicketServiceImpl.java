@@ -1,8 +1,8 @@
 package model.service.impl;
 
-import Entity.Session;
-import Entity.Ticket;
-import Entity.User;
+import entity.Session;
+import entity.Ticket;
+import entity.User;
 import model.dao.DaoFactory;
 import model.dao.TicketDao;
 import model.service.TicketService;

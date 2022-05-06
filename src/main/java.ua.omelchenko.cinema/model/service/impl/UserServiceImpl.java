@@ -1,6 +1,6 @@
 package model.service.impl;
 
-import Entity.User;
+import entity.User;
 import model.dao.DaoFactory;
 import model.dao.UserDao;
 import model.service.UserService;

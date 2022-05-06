@@ -1,7 +1,7 @@
 package model.dao.impl;
 
-import Entity.Film;
-import Entity.Session;
+import entity.Film;
+import entity.Session;
 import model.dao.DaoFactory;
 import model.dao.SessionDao;
 import model.service.UserService;

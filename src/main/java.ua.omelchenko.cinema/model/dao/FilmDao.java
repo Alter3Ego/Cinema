@@ -1,6 +1,6 @@
 package model.dao;
 
-import Entity.Film;
+import entity.Film;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package controller.filters;
 
-import Entity.Film;
-import Entity.Session;
-import Entity.User;
+import entity.Film;
+import entity.Session;
+import entity.User;
 import controller.TemporaryAttributes;
 
 import javax.servlet.*;

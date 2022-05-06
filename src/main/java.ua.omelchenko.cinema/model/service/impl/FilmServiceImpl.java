@@ -1,6 +1,6 @@
 package model.service.impl;
 
-import Entity.Film;
+import entity.Film;
 import model.dao.DaoFactory;
 import model.dao.FilmDao;
 import model.service.FilmService;

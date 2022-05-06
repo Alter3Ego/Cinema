@@ -1,6 +1,6 @@
 package model.service.impl;
 
-import Entity.Session;
+import entity.Session;
 import model.dao.DaoFactory;
 import model.dao.SessionDao;
 import model.service.SessionService;

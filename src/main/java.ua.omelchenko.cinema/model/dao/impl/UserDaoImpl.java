@@ -1,6 +1,6 @@
 package model.dao.impl;
 
-import Entity.User;
+import entity.User;
 import exception.DBException;
 import model.dao.UserDao;
 import org.apache.log4j.Logger;

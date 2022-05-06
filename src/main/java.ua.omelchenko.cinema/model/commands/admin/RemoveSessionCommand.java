@@ -1,7 +1,7 @@
 package model.commands.admin;
 
-import Entity.Session;
-import Entity.User;
+import entity.Session;
+import entity.User;
 import model.commands.Command;
 import model.commands.MainPageCommand;
 import model.dao.DaoFactory;
