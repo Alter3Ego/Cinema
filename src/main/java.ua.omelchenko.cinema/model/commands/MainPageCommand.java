@@ -86,9 +86,9 @@ public class MainPageCommand implements Command {
 
     protected void extracted(HttpServletRequest request, int end, List<Session> sessionList) {
         TemporaryAttributes tA = (TemporaryAttributes) request.getSession().getAttribute("temp");
-        tA.setMainPreviousPage(end - NUMBERS_OF_OBJECTS * 2);
+        tA.setAttributes("mainPreviousPage", end - NUMBERS_OF_OBJECTS * 2);
         if (sessionList.size() >= ONE_MORE_OBJECT) {
-            tA.setMainNextPage(end);
+            tA.setAttributes("mainNextPage", end);
         }
 
         request.getSession().setAttribute("temp", tA);

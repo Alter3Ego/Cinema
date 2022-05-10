@@ -25,7 +25,7 @@ public class UpdateBalance implements Command {
         String sum = req.getParameter(PARAM_NAME_SUM);
         if (sum == null || !sum.matches(REGEX_SUM)) {
             TemporaryAttributes tA = (TemporaryAttributes) req.getSession().getAttribute("temp");
-            tA.setErrorUpdateSum(true);
+            tA.setAttributes("errorUpdateSum", true);
             req.getSession().setAttribute("temp", tA);
             return page;
         }

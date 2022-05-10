@@ -69,16 +69,16 @@ public class SessionPageCommand implements Command {
                         session = sessionService.updateNumberOfTickets(session, ticketInt.size());
                     } else {
                         user = userService.updateBalance(user, price);
-                        tA.setOperationError(true);
+                        tA.setAttributes("operationError", true);
                     }
                     request.getSession().setAttribute("user", user);
 
                 } catch (DBException e) {
                     LOGGER.error("DBException" + e);
-                    tA.setErrorBalance(true);
+                    tA.setAttributes("errorBalance", true);
                 }
             } else {
-                tA.setErrorLogInSession(true);
+                tA.setAttributes("errorLogInSession", true);
             }
         }
         request.getSession().setAttribute("currentSession", session);
@@ -90,8 +90,7 @@ public class SessionPageCommand implements Command {
         for (Ticket ticket : tickets) {
             places.put(ticket.getPlace(), ticket.getUser());
         }
-        tA.setPlaces(places);
-
+        tA.setAttributes("places", places);
         return ConfigurationManager.getInstance()
                 .getProperty(ConfigurationManager.SESSION_PAGE_PATH);
     }

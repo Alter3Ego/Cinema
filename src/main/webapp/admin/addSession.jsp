@@ -36,21 +36,21 @@
         <div style="width: 27rem" class="form-group  mx-auto">
             <label for="exampleFormControlSelect1"><h3><fmt:message key="addSession.film.label"/></h3></label>
             <select name="filmId" value="" class="form-control" id="exampleFormControlSelect1">
-                <c:forEach items="${temp.sessionAddPage}" var="item">
+                <c:forEach items="${temp.attributes.sessionAddPage}" var="item">
                     <option value="${item.filmId}">${item.title}</option>
                 </c:forEach>
             </select>
         </div>
     </div>
     <div class="text-success">
-        <c:if test="${temp.successfulAdd == true}">
+        <c:if test="${temp.attributes.successfulAdd == true}">
             <p>
                 <fmt:message key="addSession.successfulAdd"/>
             </p>
         </c:if>
     </div>
     <div class="text-danger">
-        <c:if test="${temp.errorDB == true}">
+        <c:if test="${temp.attributes.errorDB == true}">
             <p>
                 <fmt:message key="addSession.errorAdding"/>
             </p>

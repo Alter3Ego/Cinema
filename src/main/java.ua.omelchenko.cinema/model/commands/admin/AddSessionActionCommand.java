@@ -35,9 +35,9 @@ public class AddSessionActionCommand implements Command {
         if (dateTime != null && filmId != null) {
             SessionService sessionService = new SessionServiceImpl(DaoFactory.getInstance());
             boolean e = sessionService.addSession(filmId, dateTime);
-            tA.setSuccessfulAdd(e);
+            tA.setAttributes("successfulAdd", e);
         } else {
-            tA.setErrorDB(true);
+            tA.setAttributes("errorDB", true);
         }
         request.getSession().setAttribute("temp", tA);
 

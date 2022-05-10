@@ -31,11 +31,11 @@ public class SecurityFilter implements Filter {
         String currentUri = req.getRequestURI();
         User user = (User) session.getAttribute("user");
         Session currentSession = (Session) req.getSession().getAttribute("currentSession");
-        List<Film> sessionAddPage = null;
+        Object sessionAddPage = null;
 
         if (req.getSession().getAttribute("temp") != null) {
             TemporaryAttributes tA = (TemporaryAttributes) req.getSession().getAttribute("temp");
-            sessionAddPage = tA.getSessionAddPage();
+            sessionAddPage = tA.getAttributes().get("sessionAddPage");
         }
         String contextPath = req.getContextPath();
         String userRole = null;
@@ -50,15 +50,6 @@ public class SecurityFilter implements Filter {
             userRole = "";
         }
 
-        //Role checking
-        if (currentUri.contains("/user.jsp") && !userRole.equals("user") && !userRole.equals("admin")) {
-            path = "login.jsp";
-        }
-        if ((currentUri.equals("/session.jsp") && currentSession == null) ||
-                (currentUri.contains("admin/addSession.jsp") && !userRole.equals("admin"))
-        ) {
-            path = contextPath + "/error404.jsp";
-        }
 
         //Page redirect
         if (currentUri.contains("/index.jsp")) {
@@ -71,6 +62,17 @@ public class SecurityFilter implements Filter {
 
             path = contextPath + "/controller?command=sessionAddPage";
         }
+
+        //Role checking
+        if (currentUri.contains("/user.jsp") && !userRole.equals("user") && !userRole.equals("admin")) {
+            path = "login.jsp";
+        }
+        if ((currentUri.equals("/session.jsp") && currentSession == null) ||
+                (currentUri.contains("admin/addSession.jsp") && !userRole.equals("admin"))
+        ) {
+            path = contextPath + "/error404.jsp";
+        }
+
         if (path != null) {
             RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher(path);
             requestDispatcher.forward(servletRequest, servletResponse);

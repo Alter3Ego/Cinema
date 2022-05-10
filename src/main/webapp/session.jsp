@@ -39,17 +39,17 @@
             </button>
 
             <div class="text-danger ">
-                <c:if test="${temp.errorLogInSession == true}">
+                <c:if test="${temp.attributes.errorLogInSession == true}">
                     <p>
                         <fmt:message key="session.login.error"/>
                     </p>
                 </c:if>
-                <c:if test="${temp.errorBalance == true}">
+                <c:if test="${temp.attributes.errorBalance == true}">
                     <p>
                         <fmt:message key="session.balance.error"/>
                     </p>
                 </c:if>
-                <c:if test="${temp.operationError == true}">
+                <c:if test="${temp.attributes.operationError == true}">
                     <p>
                         <fmt:message key="session.operation.error"/>
                     </p>
@@ -80,7 +80,7 @@
                 places.innerHTML = "<h1> <fmt:message key="session.buy.tickets"/> </h1>";
                 let user = "${user.userId}";
                 let placesInfo = {
-                <c:forEach items="${temp.places}" var="item" varStatus="loop">
+                <c:forEach items="${temp.attributes.places}" var="item" varStatus="loop">
                 ${item.key}:
                 '${item.value}'
                 ${not loop.last ? ',' : ''}

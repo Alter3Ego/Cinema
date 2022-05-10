@@ -38,7 +38,7 @@ public class SignUpCommand implements Command {
 
         if (wrongInputCheck(firstName, lastName, email, password)){
             TemporaryAttributes tA = (TemporaryAttributes) req.getSession().getAttribute("temp");
-            tA.setSignUpDataError(true);
+            tA.setAttributes("signUpDataError", true);
             req.getSession().setAttribute("temp", tA);
             return page;
         }
@@ -46,7 +46,7 @@ public class SignUpCommand implements Command {
 
         if (userService.checkEmail(email)) {
             TemporaryAttributes tA = (TemporaryAttributes) req.getSession().getAttribute("temp");
-            tA.setSignUpEmailError(true);
+            tA.setAttributes("signUpEmailError",true);
             req.getSession().setAttribute("temp", tA);
         } else {
             String hashPass = PasswordHash.encryption(password);

@@ -26,7 +26,7 @@
                 aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="text-danger">
-        <c:if test="${temp.signUpDataError == true}">
+        <c:if test="${temp.attributes.signUpDataError == true}">
             <p>
                 <fmt:message key="signUp.name.info"/>
             </p>
@@ -38,14 +38,14 @@
                 aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="text-success">
-        <c:if test="${temp.signUpEmailError == false}">
+        <c:if test="${temp.attributes.signUpEmailError == null}">
             <p>
                 <fmt:message key="signUp.email.info"/>
             </p>
         </c:if>
     </div>
     <div class="text-danger">
-        <c:if test="${temp.signUpEmailError == true}">
+        <c:if test="${temp.attributes.signUpEmailError == true}">
             <p>
                 <fmt:message key="signUp.email.identity.error"/>
             </p>
@@ -57,14 +57,14 @@
                 aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="text-success">
-        <c:if test="${temp.signUpDataError == false}">
+        <c:if test="${temp.attributes.signUpDataError == null}">
             <p>
                 <fmt:message key="signUp.password.info"/>
             </p>
         </c:if>
     </div>
     <div class="text-danger">
-        <c:if test="${temp.signUpDataError == true}">
+        <c:if test="${temp.attributes.signUpDataError == true}">
             <p>
                 <fmt:message key="login.password.info"/>
             </p>

@@ -23,7 +23,7 @@
                id="exampleInputEmail1" aria-describedby="emailHelp">
         <div id="emailHelp" class="font-weight-bold">
             <div class="text-danger">
-                <c:if test="${temp.emailError == true}">
+                <c:if test="${temp.attributes.emailError == true}">
                     <p>
                         <fmt:message key="login.error.message"/>
                     </p>
@@ -37,7 +37,7 @@
                id="exampleInputPassword1">
         <div id="passwordHelp" class="font-weight-bold">
             <div class="text-danger ">
-                <c:if test="${temp.emailError == true}">
+                <c:if test="${temp.attributes.emailError == true}">
                     <p>
                         <fmt:message key="login.password.info"/>
                     </p>

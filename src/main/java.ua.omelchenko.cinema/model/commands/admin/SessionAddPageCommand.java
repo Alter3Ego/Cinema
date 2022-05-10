@@ -20,7 +20,7 @@ public class SessionAddPageCommand implements Command {
         FilmService filmService = new FilmServiceImpl(DaoFactory.getInstance());
 
         TemporaryAttributes tA = (TemporaryAttributes) request.getSession().getAttribute("temp");
-        tA.setSessionAddPage(filmService.getAllFilms());
+        tA.setAttributes("sessionAddPage", filmService.getAllFilms());
         request.getSession().setAttribute("temp", tA);
         return ConfigurationManager.getInstance()
                 .getProperty(ConfigurationManager.ADD_SESSION_PATH);

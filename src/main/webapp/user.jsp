@@ -22,7 +22,7 @@
     <input type="number" name="sum" value="" style="width: 22rem" class="form-control mx-auto"
            id="addMoney">
     <div class="text-danger">
-        <c:if test="${temp.errorUpdateSum == true}">
+        <c:if test="${temp.attributes.errorUpdateSum == true}">
             <p>
                 <fmt:message key="user.error.replenish"/>
             </p>

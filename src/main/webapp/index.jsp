@@ -149,13 +149,13 @@
 </div>
 <div class="text-center">
     <c:if test="${mainCell1 != null}">
-        <c:if test="${temp.mainNextPage == null || temp.mainNextPage > 5 }">
-            <a href="controller?mainPage=${temp.mainPreviousPage}" class="btn btn-primary my-2">&#8592;<fmt:message
+        <c:if test="${temp.attributes.mainNextPage == null || temp.attributes.mainNextPage > 5 }">
+            <a href="controller?mainPage=${temp.attributes.mainPreviousPage}" class="btn btn-primary my-2">&#8592;<fmt:message
                     key="index.navigation.back"/></a>
         </c:if>
     </c:if>
-    <c:if test="${temp.mainNextPage != null}">
-        <a href="controller?mainPage=${temp.mainNextPage}" class="btn btn-primary my-2"><fmt:message
+    <c:if test="${temp.attributes.mainNextPage != null}">
+        <a href="controller?mainPage=${temp.attributes.mainNextPage}" class="btn btn-primary my-2"><fmt:message
                 key="index.navigation.next"/>&#8594;</a>
     </c:if>
 </div>

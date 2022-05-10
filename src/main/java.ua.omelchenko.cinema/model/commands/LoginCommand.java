@@ -34,7 +34,7 @@ public class LoginCommand implements Command {
                     .getProperty(ConfigurationManager.MAIN_PAGE_PATH);
         } else {
             TemporaryAttributes tA = (TemporaryAttributes) req.getSession().getAttribute("temp");
-            tA.setEmailError(true);
+            tA.setAttributes("emailError",true);
             req.getSession().setAttribute("temp", tA);
             page = ConfigurationManager.getInstance()
                     .getProperty(ConfigurationManager.LOGIN_PAGE_PATH);
