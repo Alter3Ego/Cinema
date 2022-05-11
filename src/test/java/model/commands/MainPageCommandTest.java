@@ -1,7 +1,6 @@
 package model.commands;
 
-import model.dao.impl.SessionDaoImpl;
-import model.service.impl.SessionServiceImpl;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,6 +8,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ua.omelchenko.cinema.model.commands.MainPageCommand;
+import ua.omelchenko.cinema.model.dao.impl.SessionDaoImpl;
+import ua.omelchenko.cinema.model.service.impl.SessionServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,7 +33,7 @@ class MainPageCommandTest {
     @Mock
     HttpSession sessionMock;
     @Mock
-    SessionDaoImpl SessionDaoImpl;
+    SessionDaoImpl sessionDaoImpl;
     @Mock
     SessionServiceImpl sessionService;
     @Captor
