@@ -1,7 +1,7 @@
 package model.logic;
 
 import org.junit.jupiter.api.Test;
-import ua.omelchenko.cinema.model.logic.PasswordHash;
+import ua.omelchenko.cinema.util.PasswordHash;
 
 import static org.junit.jupiter.api.Assertions.*;
 

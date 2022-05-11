@@ -8,9 +8,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ua.omelchenko.cinema.model.commands.MainPageCommand;
-import ua.omelchenko.cinema.model.dao.impl.SessionDaoImpl;
-import ua.omelchenko.cinema.model.service.impl.SessionServiceImpl;
+import ua.omelchenko.cinema.command.MainPageCommand;
+import ua.omelchenko.cinema.dao.impl.SessionDaoImpl;
+import ua.omelchenko.cinema.service.impl.SessionServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
