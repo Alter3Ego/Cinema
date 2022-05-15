@@ -87,8 +87,6 @@
                 </c:forEach>
             }
                 ;
-                console.log("UserId "+ user);
-                console.log("Places "+ placesInfo);
 
 
                 parent.insertBefore(places, buy);
@@ -96,8 +94,6 @@
                 for (let i = 0; i <= 15; i += 5) {
                     for (let j = 1; j <= 5; j++) {
                         let placeNumber = i + j;
-                        console.log(placeNumber);
-                        console.log(placesInfo[placeNumber]);
                         let userId = placesInfo[placeNumber];
                         let button;
                         if (userId) {
@@ -111,7 +107,6 @@
                         } else {
                             button = generateAvailableButton(placeNumber);
                         }
-                        console.log(button);
                         places.appendChild(button);
 
                     }
@@ -174,12 +169,11 @@
                         removeA(tickets, placeNumber);
                         console.log(tickets);
                     }
-
                 }
 
 
                 function removeA(arr) {
-                    var what, a = arguments, L = a.length, ax;
+                    let what, a = arguments, L = a.length, ax;
                     while (L > 1 && arr.length) {
                         what = a[--L];
                         while ((ax = arr.indexOf(what)) !== -1) {
